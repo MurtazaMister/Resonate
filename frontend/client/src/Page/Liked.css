@@ -1,0 +1,153 @@
+.row {
+    display: flex;
+}
+
+.col {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#headerbox {
+    padding: .5rem 2rem;
+    padding-top: 2rem;
+    /* background-image: linear-gradient(#1ED760, #0F0F0F 30vh); */
+    background-color: #084f21;
+}
+
+#headerbox img {
+    height: 220px;
+    width: 220px;
+    margin-right: 1rem;
+}
+
+#headerbox h1 {
+    font-size: 4rem;
+    margin: .8rem 0;
+}
+
+#headerbox h5 {
+    margin: 0;
+}
+
+#cont-playbtn {
+    padding: 2rem 0;
+}
+
+#playbtn {
+    margin: 1rem 2rem;
+    padding: .6rem;
+    background-color: #1d9325;
+    font-size: 1.7rem;
+    color: white;
+    border-radius: 100%;
+    border: 0 px transparent;
+    align-self: center;
+    vertical-align: middle;
+}
+
+#playbtn:hover {
+    transform: scale(1.2);
+}
+
+#details {
+    margin-bottom: 2rem;
+    border-collapse: collapse;
+    width: 100%;
+    color: #a1a1a1;
+}
+
+#details th {
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: left;
+    padding: 1rem;
+}
+
+#details thead {
+    border-bottom: 1px solid rgba(166, 166, 166.0, 0.5);
+    position: sticky;
+}
+
+#details td {
+    height: 2rem;
+    position: relative;
+    padding: 1rem;
+}
+
+#details-play-btn {
+    position: absolute;
+    vertical-align: middle;
+    align-items: center;
+    transform: translate(-10%, 25%);
+    visibility: hidden;
+}
+
+#details tbody tr:hover {
+    color: #fff;
+}
+
+#details tbody tr:hover #details-play-btn {
+    visibility: visible;
+}
+
+#details tbody tr:hover .to-hide {
+    visibility: hidden;
+}
+
+.shuffle-txt {
+    display: none;
+}
+
+.menu-btn {
+    display: none;
+}
+
+.mobhide {
+    display: none;
+}
+
+@media only screen and (max-width: 780px) {
+    #headerbox img,
+    #headerbox h1 {
+        display: none;
+    }
+    #headerbox {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    #headerbox h5 {
+        font-size: 1.5rem;
+        margin: 0 0 0 0;
+    }
+    #cont-playbtn {
+        padding: 1.5rem 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    #playbtn {
+        display: none;
+    }
+    .shuffle-txt {
+        display: block;
+        padding: .6rem 2rem;
+        background-color: #1d9325;
+        border-radius: 2rem;
+        text-transform: uppercase;
+    }
+    #details thead,
+    tbody tr {
+        display: none;
+    }
+    .mobhide {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .menu-btn {
+        display: block;
+        font-size: 1.5rem;
+        color: #a1a1a1;
+    }
+}
