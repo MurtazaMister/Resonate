@@ -10,6 +10,7 @@ import LikedSongs from './Page/Liked';
 import SongPage from './Page/SongPage';
 import CreatePlaylist from './Page/CreatePlaylist';
 
+// Main application
 function App() {
     return ( 
         <Router >
