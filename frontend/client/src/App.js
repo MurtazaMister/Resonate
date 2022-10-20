@@ -11,6 +11,7 @@ import SongPage from './Page/SongPage';
 import CreatePlaylist from './Page/CreatePlaylist';
 
 // Main application
+//comment acknowledged
 function App() {
     return ( 
         <Router >
