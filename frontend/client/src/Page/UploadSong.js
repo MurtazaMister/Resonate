@@ -3,6 +3,7 @@ import "./uploadsong.css";
 import Toggle from '../config/Toggle';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { BiMessageSquareAdd } from 'react-icons/bi';
+import { Button} from 'react-bootstrap';
 
 const UploadSong = () => {
   return (
@@ -23,8 +24,11 @@ const UploadSong = () => {
       </div>
       <div className="bottom">
         <Toggle />
-        <h3>Attach music file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BiMessageSquareAdd className='add'/></h3>
+        <h3 className='bottom_2'>Attach music file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BiMessageSquareAdd className='add'/></h3>
       </div>
+      <br/>
+      <br/>
+      <Button variant="contained" className='upload'>Upload</Button>
     </div>
   )
 }

@@ -21,9 +21,9 @@ const Toggle=() => {
 
   return (
     <div className='content'>
-      <h3 className='h_3'>Mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public {ispublic ? <BiToggleLeft onClick={() => handleChange()}/> : <BiToggleRight onClick={() => handleChange()}/>} private</h3>
+      <h3 className='h_3'>Mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public {ispublic ? <BiToggleLeft className='left_right' onClick={() => handleChange()}/> : <BiToggleRight className='left_right' onClick={() => handleChange()}/>} private</h3>
 
-      <h3 className='h_3'>Anonymous upload&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yes {isanonymous ? <BiToggleLeft onClick={() => handleChange_1()}/> : <BiToggleRight onClick={() => handleChange_1()}/>} No</h3>
+      <h3 className='h_3'>Anonymous upload&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yes {isanonymous ? <BiToggleLeft className='left_right' onClick={() => handleChange_1()}/> : <BiToggleRight className='left_right' onClick={() => handleChange_1()}/>} No</h3>
     </div>
   )
 }

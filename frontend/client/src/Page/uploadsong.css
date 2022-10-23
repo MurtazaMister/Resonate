@@ -36,8 +36,23 @@ h2 {
     width: 500px;
 }
 
+.left_right {
+    height: 25px;
+    width: 25px;
+}
+
 input {
     width: 350px;
+}
+
+.upload {
+    height: 40px;
+    width: 100px;
+    margin-left: 480px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 20px;
 }
 
 .add {
@@ -48,6 +63,10 @@ input {
 .bottom {
     margin-top: 380px;
     margin-left: 40px;
+}
+
+.bottom_2 {
+    margin-left: 30px;
 }
 
 @media only screen and (max-width: 1300px) {
