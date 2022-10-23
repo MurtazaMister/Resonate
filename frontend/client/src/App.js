@@ -9,6 +9,7 @@ import Library from './Page/Library';
 import LikedSongs from './Page/Liked';
 import SongPage from './Page/SongPage';
 import CreatePlaylist from './Page/CreatePlaylist';
+import UploadSong from './Page/UploadSong';
 
 // Main application
 //comment acknowledged
@@ -25,7 +26,8 @@ function App() {
                     <Route exact path='/collection' component={Library} />
                     <Route  path='/collection/tracks' component={LikedSongs} />
                     <Route  path='/add' component={CreatePlaylist} />
-                    <Route  path='/songs/:id' component={SongPage} />        
+                    <Route  path='/songs/:id' component={SongPage} />    
+                    <Route  path='/upload' component={UploadSong} />    
                 </Switch>
                 <PlayBar />        
                 
