@@ -14,19 +14,19 @@ const UploadSong = () => {
         <AiFillPlusCircle className='icon'/>
         </div>
         <div className="right">
+          <br/>
             <h3>Song title</h3>
             <input type="text" name="title"/>
-            <br/>
+            <br/><br/>
             <h3>Artists</h3>
             <input type="text" name="artist"/>
-            
+            <br/>
         </div>
       </div>
       <div className="bottom">
         <Toggle />
         <h3 className='bottom_2'>Attach music file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BiMessageSquareAdd className='add'/></h3>
       </div>
-      <br/>
       <br/>
       <Button variant="contained" className='upload'>Upload</Button>
     </div>
