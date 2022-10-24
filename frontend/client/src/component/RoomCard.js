@@ -26,7 +26,6 @@ const RoomCard = (props)=> {
             <br/>
             <br/>
             <br/>
-            <br/>
             {props.time}
         </div>  
         </div>

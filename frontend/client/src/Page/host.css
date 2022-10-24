@@ -1,0 +1,33 @@
+* {
+    margin: 0px;
+}
+
+.create_room {
+    padding: 10px;
+    font-size: 20px;
+    border: 2px solid white;
+    width: 600px;
+    height: 160px;
+    margin-top: 250px;
+    margin-left: 300px;
+}
+
+label {
+    margin-left: 40px;
+}
+
+.roomname {
+    width: 300px;
+    margin: 40px;
+}
+
+.sub_button {
+    height: 30px;
+    width: 90px;
+    margin-left: 260px;
+    font-weight: 800;
+    padding: 0px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+}
