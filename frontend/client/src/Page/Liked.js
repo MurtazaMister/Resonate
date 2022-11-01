@@ -1,3 +1,6 @@
+
+import React from 'react';
+import ReactDOM from "react-dom";
 import "./Liked.css"
 // import DetailHead from "./detailsPageComponent/HeadBox"
 import DetailHead from "../component/HeadBox"

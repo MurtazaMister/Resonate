@@ -1,5 +1,9 @@
 import { BsPlayFill  } from 'react-icons/bs'
 import {NavLink} from 'react-router-dom'
+import React from 'react';
+import ReactDOM from "react-dom";
+
+
 const MusicCard = ({parser,styleCheck}) => {
     return ( 
         // <NavLink to={`songs/${parser.id}`}>

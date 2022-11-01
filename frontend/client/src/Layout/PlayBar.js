@@ -7,6 +7,8 @@ import { HiDeviceMobile  } from 'react-icons/hi'
 
 import SongController from '../component/playbar_songController'
 import SongDetails from '../component/PlayBar_SongDetails'
+import React from 'react';
+import ReactDOM from "react-dom";
 
 
 const PlayBar = (props) => {

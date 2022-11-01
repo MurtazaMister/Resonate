@@ -1,6 +1,9 @@
 import { Songs } from "../db/db";
 import MusicCard from "../component/MusicCard";
 
+import React from 'react';
+import ReactDOM from "react-dom";
+
 const PlayListTile = () => {
     return (
         Songs.map((tile) => ( 

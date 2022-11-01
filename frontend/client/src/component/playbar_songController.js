@@ -1,4 +1,6 @@
 
+import React from 'react';
+import ReactDOM from "react-dom";
 import { FaPlayCircle  } from 'react-icons/fa'
 import { AiFillStepForward,AiFillStepBackward  } from 'react-icons/ai'
 import { IoRepeat,IoShuffle  } from 'react-icons/io5'

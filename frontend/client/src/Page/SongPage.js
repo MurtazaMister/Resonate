@@ -1,7 +1,9 @@
 import "./Liked.css"
 import DetailHead from "../component/HeadBox"
 import SongListing from "../Layout/SongListing"
-  
+
+import React from 'react';
+import ReactDOM from "react-dom";  
 
 
 const SongPage = (props) => {

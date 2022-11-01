@@ -1,3 +1,7 @@
+
+import React from 'react';
+import ReactDOM from "react-dom";
+
 const DetailHead = ({imgsrc, heading,desc,color}) => {
     return ( 
         <div id="headerbox" style={{backgroundColor:color}}>

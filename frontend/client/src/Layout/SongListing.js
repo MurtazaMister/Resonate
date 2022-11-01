@@ -1,4 +1,8 @@
+
+import React from 'react';
+import ReactDOM from "react-dom";
 import { BsPlayFill,BsThreeDotsVertical  } from 'react-icons/bs'
+
 const SongListing = ({props,color}) => {
     return ( 
         <div>

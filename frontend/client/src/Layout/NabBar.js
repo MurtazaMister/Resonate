@@ -2,6 +2,8 @@ import { IoChevronBackCircleOutline ,IoChevronForwardCircleOutline } from 'react
 import { HiUserCircle,HiChevronDown } from 'react-icons/hi'
 import { IconContext  } from 'react-icons'
 import { useHistory } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const NavBar = () => {
   const history = useHistory();

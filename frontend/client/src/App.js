@@ -12,6 +12,8 @@ import CreatePlaylist from './Page/CreatePlaylist';
 import UploadSong from './Page/UploadSong';
 import Room from './Page/Room';
 import Host from './Page/Host';
+import React from 'react';
+import ReactDOM from "react-dom";
 
 // Main application
 //comment acknowledged
