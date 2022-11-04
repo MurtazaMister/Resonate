@@ -1,8 +1,10 @@
-import { GridFsStorage } from "multer-gridfs-storage";
-import path from "path";
+const { GridFsStorage } = require("multer-gridfs-storage");
+const path = require("path");
 const crypto = require('crypto')
 
-const storage = new GridFsStorage({
+require("dotenv").config();
+
+const storage_songs = new GridFsStorage({
     url: process.env.mongoURI,
     file: (req, file)=>{
         return new Promise((resolve, reject)=>{
@@ -13,7 +15,7 @@ const storage = new GridFsStorage({
                 const filename = buf.toString('hex')+path.extname(file.originalname);
                 const fileinfo = {
                     filename: filename,
-                    bucketName: type, // can be 'songs' or 'images'
+                    bucketName: 'songs',
                 }
                 resolve(fileinfo);
             })
@@ -21,4 +23,26 @@ const storage = new GridFsStorage({
     }
 })
 
-export default storage;
+const storage_images = new GridFsStorage({
+    url: process.env.mongoURI,
+    file: (req, file)=>{
+        return new Promise((resolve, reject)=>{
+            crypto.randomBytes(16, (err,buf)=>{
+                if(err){
+                    return reject(err);
+                }
+                const filename = buf.toString('hex')+path.extname(file.originalname);
+                const fileinfo = {
+                    filename: filename,
+                    bucketName: 'images',
+                }
+                resolve(fileinfo);
+            })
+        })
+    }
+})
+
+module.exports = {
+    storage_songs,
+    storage_images,
+}

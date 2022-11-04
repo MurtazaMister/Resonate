@@ -22,7 +22,7 @@ const conn = mongoose.createConnection(mongoURI);
 const port = process.env.port || 5000;
 
 app.get("/", (req,res)=>{
-    res.send("hello world");
+    res.send("Server up and running");
 })
 
 conn.once('open',()=>{

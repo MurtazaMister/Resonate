@@ -11,6 +11,8 @@ const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
 const { connect } = require("http2");
 
+const {storage_images} = require('../utilities/store');
+
 let gfs_images;
 
 function init_images(conn){
@@ -25,8 +27,22 @@ function init_images(conn){
 
 }
 
-router.post('/upload', (req,res)=>{
+const upload = multer({storage:storage_images, limits:{fileSize: 2097152}}).single('thumbnail');
 
+router.post('/upload', (req,res)=>{
+    upload(req, res, (err)=>{
+        if(err){
+            res.json({
+                "status": "fail",
+                "error": "Invalid file or filesize"
+            });
+        }
+        else{
+            res.json({
+                "status": "success",
+            })
+        }
+    });
 })
 
 module.exports = {
