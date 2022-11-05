@@ -8,6 +8,8 @@ body {
 }
 
 .genre-header {
+    margin-left: 1em;
+    margin-right: 1em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -17,7 +19,7 @@ body {
     padding: 10px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 4.5vw;
+    grid-gap: 1.5vw;
     overflow-x: scroll;
     background-color: var(--primaryBg);
 }
@@ -102,7 +104,7 @@ body {
 }
 
 .hover-playbtn {
-    padding: .6rem;
+    /* padding: .6rem;
     background-color: #1d9325;
     box-shadow: 3px 3px 12px #1e1e1e;
     font-size: 1.3rem;
@@ -113,8 +115,24 @@ body {
     align-self: center;
     vertical-align: middle;
     position: absolute;
+    visibility: hidden; */
+    /* margin: 0%; */
+    background-color: #1d9325;
+    box-shadow: 3px 3px 12px #1e1e1e;
+    font-size: 1.3rem;
+    height: 35px;
+    width: 35px;
+    /* transform: translate(-120%, 280%); */
+    color: white;
+    border-radius: 100%;
+    border: 0 px transparent;
+    /* align-self: center; */
+    /* vertical-align: middle; */
+    position: absolute;
     visibility: hidden;
     /* margin: 0%; */
+    bottom: 2.5em;
+    right: 0.75em;
 }
 
 .neumorphisim-musiccard {

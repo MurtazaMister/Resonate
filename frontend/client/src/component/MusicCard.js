@@ -11,13 +11,13 @@ const MusicCard = ({parser,styleCheck}) => {
             pathname:`songs/${parser.id}`,
             state:{check: parser}
         }}>
-        <div className={styleCheck?"music-card neumorphisim-musiccard":"music-card library-card"} >
+        <div style={{width:"fit-content"}} className={styleCheck?"music-card neumorphisim-musiccard":"music-card library-card"} >
         <img loading="lazy" src={parser.image} alt="s"  />
         
-        <BsPlayFill className="hover-playbtn"  />
+        <BsPlayFill viewBox='-0.5 0 16 16' className="hover-playbtn"  />
         <div>
-            <span className="title">{parser.song}</span>
-            <span className="singer">{parser.singer}</span>
+            <span style={{width:"150px"}} className="title">{parser.song}</span>
+            <span style={{width:"150px"}} className="singer">{parser.singer}</span>
         </div>
         
         

@@ -173,7 +173,7 @@ a:-webkit-any-link {
     overflow: auto;
     grid-column: 3/13;
     grid-row: 2/12;
-    padding: 0 2rem;
+    padding: 0 0rem;
 }
 
 
