@@ -6,6 +6,8 @@ import { BiMessageSquareAdd } from 'react-icons/bi';
 import { Button} from 'react-bootstrap';
 import axios from 'axios';
 
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const UploadSong = () => {
   const [song, setSong] = useState();
@@ -26,7 +28,11 @@ const UploadSong = () => {
   const [imageName, setImageName] = useState((activator.image)?imageId:'');
   const [songName, setSongName] = useState((activator.song)?songId:'');
 
+  const [load, setLoad] = useState(false);
+
   function cleanUp(){
+    setImageName('');
+    setSongName('');
     setTitle('');
     setArtists('');
     setImage();
@@ -56,11 +62,17 @@ const UploadSong = () => {
       document.getElementById('thumbnail').value = '';
       document.getElementById('imageIndicator').innerText = imageName;
     }
+    else{
+      document.getElementById('imageIndicator').innerText = imageName;
+    }
   },[imageName]);
   
   useEffect(()=>{
     if(songName!=""){
       document.getElementById('song').value = '';
+      document.getElementById('songIndicator').innerText = songName;
+    }
+    else{
       document.getElementById('songIndicator').innerText = songName;
     }
   },[songName]);
@@ -79,8 +91,9 @@ const UploadSong = () => {
 
   },[activator]);
 
-  const final_upload = ()=>{
-    axios.post('http://localhost:5000/music/upload',{
+  const final_upload = async ()=>{
+    setLoad(true);
+    await axios.post('http://localhost:5000/music/upload',{
         'thumbnail':imageId,
         'title':title,
         'artists':artists,
@@ -109,6 +122,7 @@ const UploadSong = () => {
           setTitleError(false);
         }
       });
+      setLoad(false);
   }
 
   const upload_event = async (e)=>{
@@ -122,12 +136,13 @@ const UploadSong = () => {
     formdata.append('song',song);
     
     if(activator.song==false){
+      setLoad(true);
       let res_song = await axios.post('http://localhost:5000/songs/upload',formdata,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
-      
+      setLoad(false);
       if(res_song.data.status == "success"){
         setSongError(false);
         await setSongName(res_song.data.filename);
@@ -145,11 +160,13 @@ const UploadSong = () => {
     formdata.append('thumbnail',image);
 
     if(activator.image == false){
+      setLoad(true);
       let res_image = await axios.post('http://localhost:5000/images/upload',formdata,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
+      setLoad(false);
       
       if(res_image.data.status == "success"){
         setImageError(false);
@@ -177,7 +194,15 @@ const UploadSong = () => {
   }
 
   return (
-    <form enctype="multipart/form-data" onSubmit={upload_event} className="content">
+    <>
+    <Backdrop
+      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={load}
+      // onClick={handleClose}
+    >
+    <CircularProgress style={{position:"absolute"}} color="inherit" />
+    </Backdrop>
+    <form style={{opacity:((load)?0.2:1)}} enctype="multipart/form-data" onSubmit={upload_event} className="content">
       <h2>Brew your music</h2>
       <div>
         <div className="rectangle">
@@ -208,6 +233,8 @@ const UploadSong = () => {
       <br/>
       <Button type="submit" variant="contained" className='upload'>Upload</Button>
     </form>
+    {/* </Backdrop> */}
+    </>
   )
 }
 
