@@ -31,7 +31,6 @@ const upload = multer({storage:storage_images, limits:{fileSize: 2097152}}).sing
 
 router.post('/upload', (req,res)=>{
     upload(req, res, (err)=>{
-        console.log(res.req.file);
         if(res.req.file == undefined || err){
             res.json({
                 "status": "fail",

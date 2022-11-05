@@ -30,6 +30,9 @@ const musicSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'images.files'
     },
+    duration: {
+        type: String,
+    }
 },{
     timestamps: true,
 });

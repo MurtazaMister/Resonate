@@ -5,12 +5,14 @@ import { AiFillPlusCircle } from 'react-icons/ai';
 import { BiMessageSquareAdd } from 'react-icons/bi';
 import { Button} from 'react-bootstrap';
 import axios from 'axios';
+import checkFileDuration from '../utility/duration';
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const UploadSong = () => {
   const [song, setSong] = useState();
+  const [duration, setDuration] = useState('');
   const [image, setImage] = useState();
   const [title, setTitle] = useState('');
   const [artists, setArtists] = useState('');
@@ -33,65 +35,22 @@ const UploadSong = () => {
   function cleanUp(){
     setImageName('');
     setSongName('');
+    setImageId('');
+    setSongId('');
     setTitle('');
     setArtists('');
     setImage();
     setSong();
+    setDuration('');
+
+    setTitleError(false);
+    setImageError(false);
+    setSongError(false);
   }
 
-  useEffect(()=>{
-    if(imageId==undefined){
-      setActivator({...activator,image:false});
-    }
-    else{
-      setActivator({...activator,image:true});
-    }
-  },[imageId]);
-  
-  useEffect(()=>{
-    if(songId==undefined){
-      setActivator({...activator,song:false});
-    }
-    else{
-      setActivator({...activator,song:true});
-    }
-  },[songId]);
-  
-  useEffect(()=>{
-    if(imageName!=""){
-      document.getElementById('thumbnail').value = '';
-      document.getElementById('imageIndicator').innerText = imageName;
-    }
-    else{
-      document.getElementById('imageIndicator').innerText = imageName;
-    }
-  },[imageName]);
-  
-  useEffect(()=>{
-    if(songName!=""){
-      document.getElementById('song').value = '';
-      document.getElementById('songIndicator').innerText = songName;
-    }
-    else{
-      document.getElementById('songIndicator').innerText = songName;
-    }
-  },[songName]);
-
-  useEffect(()=>{
-
-    if(activator.song && activator.image){
-
-      // we have all the data ready to be uploaded
+  useEffect(async ()=>{
+    if(duration!=''){
       
-
-      // passing this data to the final upload
-      final_upload();
-      
-    }
-
-  },[activator]);
-
-  const final_upload = async ()=>{
     setLoad(true);
     await axios.post('http://localhost:5000/music/upload',{
         'thumbnail':imageId,
@@ -100,11 +59,12 @@ const UploadSong = () => {
         'isPublic':true, // formdata.append('isPublic',isPublic);
         'isAnonymous':true, // formdata.append('isAnonymous',isAnonymous);
         'song':songId,
+        'duration':duration,
       },{}).then(res=>{
         if(res.data.status=="success"){
+          setActivator({song:false,image:false});
           setTitleError(false);
           cleanUp();
-          setActivator({song:false,image:false});
         }
         else{
           if(title.trim.length==0){
@@ -123,6 +83,68 @@ const UploadSong = () => {
         }
       });
       setLoad(false);
+  
+    }
+  }, [duration])
+
+  useEffect(()=>{
+    if(imageId==undefined || songId==''){
+      setActivator({...activator,image:false});
+    }
+    else{
+      setActivator({...activator,image:true});
+    }
+  },[imageId]);
+  
+  useEffect(()=>{
+    if(songId==undefined || songId==''){
+      setActivator({...activator,song:false});
+    }
+    else{
+      setActivator({...activator,song:true});
+    }
+  },[songId]);
+  
+  useEffect(()=>{
+    // if(imageName!=""){
+    //   document.getElementById('thumbnail').value = '';
+    //   document.getElementById('imageIndicator').innerText = imageName;
+    // }
+    // else{
+    //   document.getElementById('imageIndicator').innerText = imageName;
+    // }
+    document.getElementById('imageIndicator').innerText = imageName;
+  },[imageName]);
+  
+  useEffect(()=>{
+    // if(songName!=""){
+    //   document.getElementById('song').value = '';
+    //   document.getElementById('songIndicator').innerText = songName;
+    // }
+    // else{
+    //   document.getElementById('songIndicator').innerText = songName;
+    // }
+    document.getElementById('songIndicator').innerText = songName;
+  },[songName]);
+
+  useEffect(()=>{
+
+    if(activator.song && activator.image){
+
+      // we have all the data ready to be uploaded
+      
+
+      // passing this data to the final upload
+      final_upload();
+      
+    }
+
+  },[activator]);
+
+  const final_upload = async ()=>{
+    checkFileDuration(document.getElementById('song').files[0],setDuration);
+    document.getElementById('thumbnail').value = '';
+    document.getElementById('song').value = '';
   }
 
   const upload_event = async (e)=>{
