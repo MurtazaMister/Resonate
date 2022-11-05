@@ -36,6 +36,7 @@ const storage_images = new GridFsStorage({
                     filename: filename,
                     bucketName: 'images',
                 }
+                req.fileinfo = fileinfo;
                 resolve(fileinfo);
             })
         })

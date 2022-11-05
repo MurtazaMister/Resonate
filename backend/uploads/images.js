@@ -40,6 +40,7 @@ router.post('/upload', (req,res)=>{
         else{
             res.json({
                 "status": "success",
+                "id": res.req.file.id,
             })
         }
     });
