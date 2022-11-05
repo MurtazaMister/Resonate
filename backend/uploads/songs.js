@@ -31,7 +31,7 @@ const upload = multer({storage:storage_songs, limits:{fileSize: 10485760}}).sing
 
 router.post('/upload', (req,res,next)=>{
     upload(req, res, (err)=>{
-        if(err){
+        if(res.req.file == undefined || err){
             res.json({
                 "status": "fail",
                 "error": "Invalid file or filesize"
@@ -41,6 +41,7 @@ router.post('/upload', (req,res,next)=>{
             res.json({
                 "status": "success",
                 "id": res.req.file.id,
+                "filename": res.req.file.filename,
             })
         }
     })
