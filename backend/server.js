@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const {init_songs, song_router} = require('./uploads/songs');
 const {init_images, image_router} = require('./uploads/images');
 const { music_router } = require("./uploads/music");
+const api_music_router = require("./api/music.api");
 
 require("dotenv").config();
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use('/songs',song_router);
 app.use('/images',image_router);
 app.use('/music',music_router);
+app.use('/api/music',api_music_router);
 
 const port = process.env.port || 5000;
 

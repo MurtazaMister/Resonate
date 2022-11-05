@@ -3,8 +3,22 @@ import MusicCard from "../component/MusicCard";
 
 import React from 'react';
 import ReactDOM from "react-dom";
+import { useState, useEffect } from "react";
 
 const PlayListTile = () => {
+
+    const [songs, setSongs] = useState({});
+
+    useEffect(()=>{
+        // Recently Added - public - /public
+        // Your uploads - self uploaded songs - /self
+        // Your private collection - self uploaded private songs - /private
+        // Top playlists - public - /playlists/public
+        // Your playlists - /playlists/self
+        // Your private jukebox - /playlists/private
+        // All the artists - sorting artists wise - /artists
+    },[]);
+
     return (
         Songs.map((tile) => ( 
             <div className = "genre-tile" key = { tile.title } >

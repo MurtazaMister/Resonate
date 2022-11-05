@@ -50,4 +50,5 @@ router.post('/upload', (req,res,next)=>{
 module.exports = {
     init_songs,
     song_router : router,
+    gfs_songs,
 }

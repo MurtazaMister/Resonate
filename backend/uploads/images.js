@@ -50,4 +50,5 @@ router.post('/upload', (req,res)=>{
 module.exports = {
     init_images,
     image_router : router,
+    gfs_images,
 }

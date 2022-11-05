@@ -3,11 +3,10 @@ import {NavLink} from 'react-router-dom'
 import React from 'react';
 import ReactDOM from "react-dom";
 
-
 const MusicCard = ({parser,styleCheck}) => {
+
     return ( 
-        // <NavLink to={`songs/${parser.id}`}>
-        <NavLink to={{
+        <NavLink style={{marginLeft:"7px",marginRight:"7px"}} to={{
             pathname:`songs/${parser.id}`,
             state:{check: parser}
         }}>
