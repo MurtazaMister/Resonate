@@ -13,13 +13,10 @@ const RoomCard = (props)=> {
             <br/>
             <br/>
             <br/>
-            <br/>
-            <br/>
             <BsMusicNote style={{marginLeft:"20px"}}/>{props.song_name} by {props.artist}
         </div>  
         <div className="right">
             <BsPersonFill />&nbsp;{props.people}
-            <br/>
             <br/>
             <br/>
             <br/>
