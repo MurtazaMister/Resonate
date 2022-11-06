@@ -13,18 +13,17 @@ const { connect } = require("http2");
 
 const {storage_images} = require('../utilities/store');
 
-let gfs_images;
-
 function init_images(conn){
 
     console.log("Initializing image buckets");
     
-    gridfsBucket_images = new mongoose.mongo.GridFSBucket(conn.db, {
+    this.gridfsBucket_images = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'images'
     });
-    gfs_images = Grid(conn.db,mongoose.mongo);
-    gfs_images.collection('images')
+    this.gfs_images = Grid(conn.db,mongoose.mongo);
+    this.gfs_images.collection('images')
 
+    return [this.gridfsBucket_images,this.gfs_images];
 }
 
 const upload = multer({storage:storage_images, limits:{fileSize: 2097152}}).single('thumbnail');
@@ -50,5 +49,4 @@ router.post('/upload', (req,res)=>{
 module.exports = {
     init_images,
     image_router : router,
-    gfs_images,
 }

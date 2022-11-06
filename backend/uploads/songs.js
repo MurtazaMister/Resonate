@@ -13,18 +13,17 @@ const { connect } = require("http2");
 
 const {storage_songs} = require('../utilities/store');
 
-let gfs_songs;
-
 function init_songs(conn){
 
     console.log("Initializing song buckets");
     
-    gridfsBucket_songs = new mongoose.mongo.GridFSBucket(conn.db, {
+    this.gridfsBucket_songs = new mongoose.mongo.GridFSBucket(conn.db, {
         bucketName: 'songs'
     });
-    gfs_songs = Grid(conn.db,mongoose.mongo);
-    gfs_songs.collection('songs')
+    this.gfs_songs = Grid(conn.db,mongoose.mongo);
+    this.gfs_songs.collection('songs')
 
+    return [this.gridfsBucket_songs,this.gfs_songs]
 }
 
 const upload = multer({storage:storage_songs, limits:{fileSize: 10485760}}).single('song');
@@ -50,5 +49,4 @@ router.post('/upload', (req,res,next)=>{
 module.exports = {
     init_songs,
     song_router : router,
-    gfs_songs,
 }

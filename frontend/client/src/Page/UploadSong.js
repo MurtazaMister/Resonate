@@ -52,7 +52,7 @@ const UploadSong = () => {
     if(duration!=''){
       
     setLoad(true);
-    await axios.post('http://localhost:5000/music/upload',{
+    await axios.post(`${process.env.REACT_APP_SERVER}/music/upload`,{
         'thumbnail':imageId,
         'title':title,
         'artists':artists,
@@ -159,7 +159,7 @@ const UploadSong = () => {
     
     if(activator.song==false){
       setLoad(true);
-      let res_song = await axios.post('http://localhost:5000/songs/upload',formdata,{
+      let res_song = await axios.post(`${process.env.REACT_APP_SERVER}/songs/upload`,formdata,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -183,7 +183,7 @@ const UploadSong = () => {
 
     if(activator.image == false){
       setLoad(true);
-      let res_image = await axios.post('http://localhost:5000/images/upload',formdata,{
+      let res_image = await axios.post(`${process.env.REACT_APP_SERVER}/images/upload`,formdata,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
