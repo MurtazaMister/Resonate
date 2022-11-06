@@ -9,7 +9,6 @@ import { RiPlayListAddFill } from 'react-icons/ri'
 import { NavLink } from "react-router-dom";
 // import {logo} from './logo-name.svg';
 import React from 'react';
-import ReactDOM from "react-dom";
 
 
 const SideBar = () => {

@@ -1,6 +1,4 @@
-
 import React from 'react';
-import ReactDOM from "react-dom";
 import DetailHead from "../component/HeadBox";
 import { BiSearch  } from 'react-icons/bi'
 import { NavLink } from 'react-router-dom'

@@ -1,7 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
 import { BiToggleLeft, BiToggleRight } from 'react-icons/bi'
-
 
 const Toggle=({isPublic, setPublic, isAnonymous, setAnonymous}) => {
     const handleChange = () => {

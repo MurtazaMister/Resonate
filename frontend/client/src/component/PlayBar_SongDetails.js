@@ -3,7 +3,6 @@ import { CgMaximize  } from 'react-icons/cg'
 import { FaPlay  } from 'react-icons/fa'
 
 import React from 'react';
-import ReactDOM from "react-dom";
 
 const SongDetails = () => {
     return ( 

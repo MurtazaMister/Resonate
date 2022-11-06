@@ -60,6 +60,7 @@ a:-webkit-any-link {
 }
 
 .nav-grid {
+    align-items: center;
     padding: 0 1rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -74,6 +75,9 @@ a:-webkit-any-link {
 }
 
 .upgrade-btn {
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
     background-color: #000;
     border: 1px solid #535353;
     border-radius: 500px;
@@ -82,19 +86,21 @@ a:-webkit-any-link {
     display: inline-block;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 1.76px;
+    letter-spacing: 0.75px;
     line-height: 18px;
-    padding: 8px 34px;
     text-align: center;
     white-space: nowrap;
+    height: 40px;
+    transition: 1s;
 }
 
 .nav-grid .upgrade-btn:hover {
-    transform: scale(1.1);
+    transform: scale(0.95);   
     border: 1px solid rgb(255, 255, 255, 0.75);
 }
 
 .user-btn {
+    height: 40px;
     background-color: #000;
     border: 1px solid #535353;
     border-radius: 500px;
