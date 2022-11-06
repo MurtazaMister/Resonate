@@ -12,6 +12,8 @@ import CreatePlaylist from './Page/CreatePlaylist';
 import UploadSong from './Page/UploadSong';
 import Room from './Page/Room';
 import Host from './Page/Host';
+import {Login} from './Page/Login';
+import {Register} from './Page/Register';
 import React from 'react';
 import ReactDOM from "react-dom";
 
@@ -26,6 +28,8 @@ function App() {
                 <SideBar />
                 <Switch>
                     <Route exact path='/' component={Home}/>
+                    <Route exact path='/login' component={Login}/>
+                    <Route exact path='/register' component={Register}/>
                     <Route path='/search' component={SearchPg} />
                     <Route exact path='/collection' component={Library} />
                     <Route  path='/collection/tracks' component={LikedSongs} />
