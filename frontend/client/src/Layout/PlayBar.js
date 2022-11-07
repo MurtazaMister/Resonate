@@ -11,17 +11,26 @@ import './PlayBar.css'
 
 import SongController from '../component/playbar_songController'
 import SongDetails from '../component/PlayBar_SongDetails'
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from "react-dom";
 
+import { CurrentSong } from '../App';
+import { useContext } from 'react';
 
 const PlayBar = (props) => {
+
+    const {currentSong} = useContext(CurrentSong);
+
+    useEffect(async ()=>{
+        await document.getElementById('song').play();
+    },[currentSong])
     
     return ( 
-
         <footer className="music-bar d-flex justify-content-center p-2">
         {/* <footer className="music-bar"> */}
-            <audio controls src="" id="song" />
+            <audio controls src={(currentSong)?`${process.env.REACT_APP_SERVER}/api/song/${currentSong}`:""} id="song" />
+            
+
             {/* <SongDetails />
             <SongController />            
             <div className="volume-controller " >
@@ -31,7 +40,6 @@ const PlayBar = (props) => {
                 <hr />
             </div> */}
         </footer>
-      
     );
 }
  

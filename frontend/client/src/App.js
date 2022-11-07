@@ -14,12 +14,15 @@ import Room from './Page/Room';
 import Host from './Page/Host';
 import {Login} from './Page/Login';
 import {Register} from './Page/Register';
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import {useAuthContext} from './hooks/useAuthContext';
+
+const CurrentSong = createContext();
 
 function App() {
 
     const {user} = useAuthContext();
+    const [currentSong, setCurrentSong] = useState(undefined);
 
     return ( 
         <Router >
@@ -27,26 +30,28 @@ function App() {
             <div className = "App" >            
                 <NavBar />
                 <SideBar />
-                <Switch>
-                    <Route exact path='/' component={Home}/>
-                    <Route path='/search' component={SearchPg} />
-                    <Route  path='/songs/:id' component={SongPage} />    
+                <CurrentSong.Provider value={{currentSong,setCurrentSong}}>
+                    <Switch>
+                        <Route exact path='/' component={Home}/>
+                        <Route path='/search' component={SearchPg} />
+                        <Route  path='/songs/:id' component={SongPage} />    
 
-                    <Route exact path='/login' component={!user?Login:Home}/>
-                    <Route exact path='/register' component={!user?Register:Home}/>
+                        <Route exact path='/login' component={!user?Login:Home}/>
+                        <Route exact path='/register' component={!user?Register:Home}/>
 
-                    <Route exact path='/collection' component={user?Library:Login} />
-                    <Route  path='/collection/tracks' component={user?LikedSongs:Login} />
-                    <Route  path='/add' component={user?CreatePlaylist:Login} />
-                    <Route  path='/upload' component={user?UploadSong:Login} />
-                    <Route  path='/rooms' component={user?Room:Login} />
-                    <Route  path='/host' component={user?Host:Login} />    
-                </Switch>
-                <PlayBar />        
-                
+                        <Route exact path='/collection' component={user?Library:Login} />
+                        <Route  path='/collection/tracks' component={user?LikedSongs:Login} />
+                        <Route  path='/add' component={user?CreatePlaylist:Login} />
+                        <Route  path='/upload' component={user?UploadSong:Login} />
+                        <Route  path='/rooms' component={user?Room:Login} />
+                        <Route  path='/host' component={user?Host:Login} />    
+                    </Switch>
+                    <PlayBar />        
+                </CurrentSong.Provider>
             </div>
         </Router>
     );
 }
 
 export default App;
+export {CurrentSong}

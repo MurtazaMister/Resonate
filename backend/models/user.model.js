@@ -5,7 +5,7 @@ const validator = require('validator');
 const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema({
-    username: { type: String, required: true, trim: true, index: { unique: true } },
+    username: { type: String, required: true, maxLength: 20, trim: true, index: { unique: true } },
     password: { type: String, required: true },
     first_name: { type: String, required: true, trim: true, minlength: 2 },
     last_name: { type: String, required: true, trim: true, minlength: 2 },
