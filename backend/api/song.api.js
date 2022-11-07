@@ -30,8 +30,6 @@ router.get('/:id', (req,res)=>{
             "Access-Control-Allow-Origin": '*',
         }
 
-        console.log({songSize, range, start, end, contentLength, headers});
-
         res.writeHead(206, headers)
 
         const downloadStream = req.gridfsBucket_songs.openDownloadStreamByName(file.filename,{start,end});
