@@ -14,7 +14,7 @@ const PlayListTile = () => {
         setSongs([]);
 
         // Recently Added - public - /public
-        let music = await axios.get(`${process.env.REACT_APP_SERVER}/api/music/public`);
+        let music = await axios.get(`${process.env.REACT_APP_SERVER}/api/music/public?limit=20`);
         // console.log(music);
         await setSongs((songs)=>{
             return [...songs,{

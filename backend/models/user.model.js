@@ -14,34 +14,6 @@ const userSchema = new Schema({
     timestamps: true
 })
 
-// userSchema.pre('save', function(next){
-//     let user = this;
-
-//     // hashing password only if it is new or modified
-//     if(!user.isModified('password')) return next();
-
-//     // generating a salt
-//     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
-//         if(err) return next(err);
-
-//         // hashing password using our new salt
-//         bcrypt.hash(user.password, salt, function(err, hash){
-//             if(err) return next(err);
-
-//             // overriding the plain text password with hash
-//             user.password = hash;
-//             next();
-//         });
-//     });
-// });
-
-// userSchema.methods.comparePassword = function(candidatePassword, cb){
-//     bcrypt.compare(candidatePassword, this.password, function(err, isMatch){
-//         if(err) return cb(err);
-//         cb(null, isMatch)
-//     })
-// }
-
 userSchema.statics.signup = async function(username, password, first_name, last_name, email){
 
     if(!username?.trim().length || !password?.trim().length || !first_name?.trim().length || !last_name?.trim().length || !email?.trim().length){

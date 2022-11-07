@@ -64,7 +64,7 @@ a:-webkit-any-link {
     padding: 0 1rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1rem;
+    grid-gap: 0.25rem;
 }
 
 .nav-logo {
@@ -112,6 +112,11 @@ a:-webkit-any-link {
     justify-content: space-around;
     align-items: center;
     padding: 0 5px;
+    transition:1s;
+}
+
+.user-btn:hover{
+    transform: scale(0.95);
 }
 
 .user-icon {

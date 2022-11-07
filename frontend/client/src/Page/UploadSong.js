@@ -6,6 +6,7 @@ import { BiMessageSquareAdd } from 'react-icons/bi';
 import { Button} from 'react-bootstrap';
 import axios from 'axios';
 import checkFileDuration from '../utility/duration';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -32,6 +33,8 @@ const UploadSong = () => {
 
   const [load, setLoad] = useState(false);
 
+  const {user} = useAuthContext();
+
   function cleanUp(){
     setImageName('');
     setSongName('');
@@ -52,37 +55,45 @@ const UploadSong = () => {
     if(duration!=''){
       
     setLoad(true);
-    await axios.post(`${process.env.REACT_APP_SERVER}/music/upload`,{
-        'thumbnail':imageId,
-        'title':title,
-        'artists':artists,
-        'isPublic':true, // formdata.append('isPublic',isPublic);
-        'isAnonymous':true, // formdata.append('isAnonymous',isAnonymous);
-        'song':songId,
-        'duration':duration,
-      },{}).then(res=>{
-        if(res.data.status=="success"){
-          setActivator({song:false,image:false});
-          setTitleError(false);
-          cleanUp();
-        }
-        else{
+    try {
+      await axios.post(`${process.env.REACT_APP_SERVER}/music/upload`,{
+          'thumbnail':imageId,
+          'title':title,
+          'artists':artists,
+          'isPublic':isPublic,
+          'isAnonymous':isAnonymous,
+          'song':songId,
+          'duration':duration,
+        },{
+          headers:{
+            'Authorization': `Bearer ${user.token}`,
+          },
+        }).then(res=>{
+          if(res.data.status=="success"){
+            setActivator({song:false,image:false});
+            setTitleError(false);
+            cleanUp();
+          }
+          else{
+            if(title.trim.length==0){
+              setTitleError(true);
+            }
+            else{
+              setTitleError(false);
+            }
+          }
+        }).catch(err=>{
           if(title.trim.length==0){
             setTitleError(true);
           }
           else{
             setTitleError(false);
           }
-        }
-      }).catch(err=>{
-        if(title.trim.length==0){
-          setTitleError(true);
-        }
-        else{
-          setTitleError(false);
-        }
-      });
+        });
+        setLoad(false);
+    } catch (err) {
       setLoad(false);
+    }
   
     }
   }, [duration])
@@ -159,21 +170,26 @@ const UploadSong = () => {
     
     if(activator.song==false){
       setLoad(true);
-      let res_song = await axios.post(`${process.env.REACT_APP_SERVER}/songs/upload`,formdata,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      try {
+        let res_song = await axios.post(`${process.env.REACT_APP_SERVER}/songs/upload`,formdata,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${user.token}`,
+          }
+        })
+        setLoad(false);
+        if(res_song.data.status == "success"){
+          setSongError(false);
+          await setSongName(res_song.data.filename);
+          await setSongId(res_song.data.id);
         }
-      })
-      setLoad(false);
-      if(res_song.data.status == "success"){
-        setSongError(false);
-        await setSongName(res_song.data.filename);
-        await setSongId(res_song.data.id);
-      }
-      else{
-        setSongError(true);
-        // setActivator({song:false,image:false});
-        return;
+        else{
+          setSongError(true);
+          // setActivator({song:false,image:false});
+          return;
+        }
+      } catch (err) {
+        setLoad(false);
       }
     }
     
@@ -183,22 +199,27 @@ const UploadSong = () => {
 
     if(activator.image == false){
       setLoad(true);
-      let res_image = await axios.post(`${process.env.REACT_APP_SERVER}/images/upload`,formdata,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      try {
+        let res_image = await axios.post(`${process.env.REACT_APP_SERVER}/images/upload`,formdata,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${user.token}`,
+          }
+        })
+        setLoad(false);
+        
+        if(res_image.data.status == "success"){
+          setImageError(false);
+          await setImageName(res_image.data.filename);
+          await setImageId(res_image.data.id);
         }
-      })
-      setLoad(false);
-      
-      if(res_image.data.status == "success"){
-        setImageError(false);
-        await setImageName(res_image.data.filename);
-        await setImageId(res_image.data.id);
-      }
-      else{
-        setImageError(true);
-        // setActivator({song:false,image:false});
-        return;
+        else{
+          setImageError(true);
+          // setActivator({song:false,image:false});
+          return;
+        }
+      } catch (err) {
+        setLoad(false);
       }
     }
   }

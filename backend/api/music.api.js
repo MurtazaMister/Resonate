@@ -9,6 +9,20 @@ const Music = require('../models/music.model');
 // @route GET /public
 // @desc Getting all the public music files
 router.get('/public', async (req,res)=>{
+
+    let limitObj = {};
+
+    if(req.query.limit && parseInt(req.query.limit)){
+        limitObj = {
+            "$limit":parseInt(req.query.limit) 
+        }
+    }
+    else{
+        limitObj = {
+            "$match": {}
+        }
+    }
+
     try {
         let music = await Music.aggregate([
             {
@@ -16,6 +30,12 @@ router.get('/public', async (req,res)=>{
                     isPublic: true,
                 },
             },
+            {
+                $sort: {
+                    updatedAt: -1,
+                }
+            },
+            limitObj,
             {
                 $project: {
                     _id: 0,
@@ -27,7 +47,7 @@ router.get('/public', async (req,res)=>{
                     song: 1,
                     duration: 1,
                 }
-            }
+            },
         ])
         res.status(201).json(music);
     } catch (err) {

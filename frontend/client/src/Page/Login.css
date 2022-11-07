@@ -53,8 +53,9 @@ button {
 }
 
 .link-btn {
-    background: none;
-    color: white;
-    text-decoration: underline;
-    max-width: max-content;
+    background: none!important;
+    color: white!important;
+    text-decoration: underline!important;
+    max-width: max-content!important;
+    margin: 1em;
 }

@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Music = require('../models/music.model');
+const auth = require('../middleware/auth.middleware');
+
+router.use(auth);
 
 router.post('/upload', async (req, res)=>{
     try {
         let music = {
             ...req.body,
-            song: req.body.song,
-            thumbnail: req.body.thumbnail,
-            // userId: mongoose.Types.ObjectId("6365261zoo73m1835q479218"), // dummy
-            // we will have a look at userId afterwards
+            userId: req.user,
         }
         music = new Music(music);
         await music.save();

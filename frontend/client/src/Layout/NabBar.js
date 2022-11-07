@@ -1,12 +1,20 @@
 import { IoChevronBackCircleOutline ,IoChevronForwardCircleOutline } from 'react-icons/io5'
-import { HiUserCircle,HiChevronDown } from 'react-icons/hi'
 import { IconContext  } from 'react-icons'
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink as Link, useLocation } from "react-router-dom";
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Tooltip, Zoom } from '@mui/material';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const NavBar = () => {
   const history = useHistory();
+  let location = useLocation();
+  const {dispatch, user} = useAuthContext();
+
+  function handleLogout(){
+    localStorage.removeItem('user');
+    dispatch({type: 'LOGOUT'})
+  }
+
     return ( 
         
       <IconContext.Provider value={{ className: 'nav-logo'}}>
@@ -16,18 +24,23 @@ const NavBar = () => {
             <IoChevronForwardCircleOutline onClick={()=>history.goForward()} />
             
           </div>
-          <div className="nav-grid">
-            <button className="upgrade-btn">
+          { user && <div className="nav-grid">
+          <button className="upgrade-btn">
               UPGRADE
             </button>
 
-            <button className="user-btn">
-            <HiUserCircle className="user-icon"/>
-              Name  
-            <HiChevronDown className="user-icon" />
+            <Tooltip TransitionComponent={Zoom} title={user.username}>
+              <button className="user-btn" onClick={handleLogout}>
+                  Logout
+              </button>
+            </Tooltip>
+            </div>}
+          { !user && <div className='nav-grid' style={{display: "flex",width:"100%",justifyContent: "flex-end"}}> 
+            <button className="user-btn" style={{width:"100%"}}>
+            {(location.pathname=='/login')?<Link style={{textDecoration:"none", color: "white"}} to="/register"> Signup </Link>:<Link style={{textDecoration:"none", color: "white"}} to="/login"> Login </Link>}
             </button>
           </div>
-          
+          }
           
         </header>
       </IconContext.Provider>

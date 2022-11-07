@@ -15,11 +15,12 @@ import Host from './Page/Host';
 import {Login} from './Page/Login';
 import {Register} from './Page/Register';
 import React from 'react';
-import ReactDOM from "react-dom";
+import {useAuthContext} from './hooks/useAuthContext';
 
-// Main application
-//comment acknowledged
 function App() {
+
+    const {user} = useAuthContext();
+
     return ( 
         <Router >
         <ScrollToTop />
@@ -28,16 +29,18 @@ function App() {
                 <SideBar />
                 <Switch>
                     <Route exact path='/' component={Home}/>
-                    <Route exact path='/login' component={Login}/>
-                    <Route exact path='/register' component={Register}/>
                     <Route path='/search' component={SearchPg} />
-                    <Route exact path='/collection' component={Library} />
-                    <Route  path='/collection/tracks' component={LikedSongs} />
-                    <Route  path='/add' component={CreatePlaylist} />
                     <Route  path='/songs/:id' component={SongPage} />    
-                    <Route  path='/upload' component={UploadSong} />
-                    <Route  path='/rooms' component={Room} />
-                    <Route  path='/host' component={Host} />    
+
+                    <Route exact path='/login' component={!user?Login:Home}/>
+                    <Route exact path='/register' component={!user?Register:Home}/>
+
+                    <Route exact path='/collection' component={user?Library:Login} />
+                    <Route  path='/collection/tracks' component={user?LikedSongs:Login} />
+                    <Route  path='/add' component={user?CreatePlaylist:Login} />
+                    <Route  path='/upload' component={user?UploadSong:Login} />
+                    <Route  path='/rooms' component={user?Room:Login} />
+                    <Route  path='/host' component={user?Host:Login} />    
                 </Switch>
                 <PlayBar />        
                 

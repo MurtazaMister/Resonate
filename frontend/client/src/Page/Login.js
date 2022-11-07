@@ -1,28 +1,55 @@
 import "./Login.css"
 import React, { useState } from "react";
-
+import { NavLink as Link } from "react-router-dom";
+import axios from "axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export const Login = (props) => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [pass, setPass] = useState('');
 
-    const handleSubmit = (e) => {
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const {dispatch} = useAuthContext()
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(email);
+        
+        try {
+            setLoading(true);
+            setError(null);
+
+            const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/user/login`, {
+                password:pass,
+                username,
+            },{
+                'Content-Type':'application/json'
+            });
+            localStorage.setItem('user',JSON.stringify(response.data));
+            dispatch({type:'LOGIN',payload:response.data});
+            
+            setLoading(false);
+
+        } catch (err) {
+            setLoading(false);
+            setError(JSON.parse(err.request.response).error);
+        }
+
     }
 
     return (
         <div className="auth-form-container content">
             <h2>Login</h2><br/>
             <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="email">Email</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+                <label htmlFor="username">Email</label>
+                <input value={username} type="text" onChange={(e) => setUsername(e.target.value)} placeholder="username" id="username" name="username" />
                 <label htmlFor="password">Password</label>
                 <input value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 <br/>
-                <button className="submit_btn" type="submit">Log In</button>
+                <button className="submit_btn" type="submit" disabled={loading}>Log In</button>
+                {error && <div style={{color: "red",display: "flex",justifyContent: "center",alignItems: "center",marginTop: "10px",}}>{error}</div>}
             </form>
-            <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register here.</button>
+            <Link className="link-btn" to="/register">Don't have an account? Register here.</Link>
         </div>
     )
 }

@@ -10,6 +10,9 @@ const Grid = require('gridfs-stream')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
 const { connect } = require("http2");
+const auth = require('../middleware/auth.middleware');
+
+router.use(auth);
 
 const {storage_songs} = require('../utilities/store');
 
