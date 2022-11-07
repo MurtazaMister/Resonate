@@ -17,12 +17,12 @@ import {Register} from './Page/Register';
 import React, { createContext, useState } from 'react';
 import {useAuthContext} from './hooks/useAuthContext';
 
-const CurrentSong = createContext();
+const CurrentMusic = createContext();
 
 function App() {
 
     const {user} = useAuthContext();
-    const [currentSong, setCurrentSong] = useState(undefined);
+    const [currentMusic, setCurrentMusic] = useState(undefined);
 
     return ( 
         <Router >
@@ -30,7 +30,7 @@ function App() {
             <div className = "App" >            
                 <NavBar />
                 <SideBar />
-                <CurrentSong.Provider value={{currentSong,setCurrentSong}}>
+                <CurrentMusic.Provider value={{currentMusic,setCurrentMusic}}>
                     <Switch>
                         <Route exact path='/' component={Home}/>
                         <Route path='/search' component={SearchPg} />
@@ -47,11 +47,11 @@ function App() {
                         <Route  path='/host' component={user?Host:Login} />    
                     </Switch>
                     <PlayBar />        
-                </CurrentSong.Provider>
+                </CurrentMusic.Provider>
             </div>
         </Router>
     );
 }
 
 export default App;
-export {CurrentSong}
+export {CurrentMusic}

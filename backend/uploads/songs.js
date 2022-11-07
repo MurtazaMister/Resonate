@@ -29,7 +29,13 @@ function init_songs(conn){
     return [this.gridfsBucket_songs,this.gfs_songs]
 }
 
-const upload = multer({storage:storage_songs, limits:{fileSize: 10485760}}).single('song');
+const upload = multer({storage:storage_songs, fileFilter:function(req,file,callback){
+    let ext = path.extname(file.originalname);
+    if(ext!='.mp3' && ext!='.ogg' && ext!='.wav'){
+        return callback(new Error('Only songs are allowed'));
+    }
+    callback(null, true);
+}, limits:{fileSize: 10485760}}).single('song');
 
 router.post('/upload', (req,res,next)=>{
     upload(req, res, (err)=>{

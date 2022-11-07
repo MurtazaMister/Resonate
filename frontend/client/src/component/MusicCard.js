@@ -1,12 +1,12 @@
 import { BsPlayFill  } from 'react-icons/bs'
 import {NavLink} from 'react-router-dom'
 import React, { useContext } from 'react';
-import { CurrentSong } from '../App';
+import { CurrentMusic } from '../App';
 
 const MusicCard = ({parser,styleCheck}) => {
-    const {currentSong, setCurrentSong} = useContext(CurrentSong);
+    const {currentMusic, setCurrentMusic} = useContext(CurrentMusic);
     function playSong(){
-        setCurrentSong(parser.song);
+        setCurrentMusic(parser);
     }
 
     return ( 
@@ -25,7 +25,7 @@ const MusicCard = ({parser,styleCheck}) => {
 
         <div>
             <span style={{width:"150px"}} className="title">{parser.title}</span>
-            <span style={{width:"150px"}} className="singer">{parser.artists}</span>
+            <span style={{width:"150px", visibility:(parser.artists?"visible":"hidden")}} className="singer">{parser.artists?parser.artists:"Artists"}</span>
         </div>
         
         

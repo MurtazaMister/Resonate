@@ -14,21 +14,27 @@ import SongDetails from '../component/PlayBar_SongDetails'
 import React, { useEffect } from 'react';
 import ReactDOM from "react-dom";
 
-import { CurrentSong } from '../App';
+import { CurrentMusic } from '../App';
 import { useContext } from 'react';
 
 const PlayBar = (props) => {
 
-    const {currentSong} = useContext(CurrentSong);
+    const {currentMusic} = useContext(CurrentMusic);
 
     useEffect(async ()=>{
         await document.getElementById('song').play();
-    },[currentSong])
+    },[currentMusic])
     
     return ( 
         <footer className="music-bar d-flex justify-content-center p-2">
-        {/* <footer className="music-bar"> */}
-            <audio controls src={(currentSong)?`${process.env.REACT_APP_SERVER}/api/song/${currentSong}`:""} id="song" />
+        {currentMusic && <div className='music-info'>
+            <img style={{width:"54px", height:"54px"}} src={(currentMusic?.thumbnail)?`${process.env.REACT_APP_SERVER}/api/thumbnail/${currentMusic?.thumbnail}`:""} alt={(currentMusic?.thumbnail)?currentMusic.title:""} />
+            <div className='title-artist-area marquee'>
+                <span class="song-title">{currentMusic.title}</span>
+                <span class="song-artists">{currentMusic.artists}</span>
+            </div>
+        </div>}
+            <audio style={{outline:"none"}} controls src={(currentMusic?.song)?`${process.env.REACT_APP_SERVER}/api/song/${currentMusic?.song}`:""} id="song" />
             
 
             {/* <SongDetails />

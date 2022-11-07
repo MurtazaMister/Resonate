@@ -29,7 +29,13 @@ function init_images(conn){
     return [this.gridfsBucket_images,this.gfs_images];
 }
 
-const upload = multer({storage:storage_images, limits:{fileSize: 2097152}}).single('thumbnail');
+const upload = multer({storage:storage_images, fileFilter:function(req,file,callback){
+    let ext = path.extname(file.originalname);
+    if(ext!='.png' && ext!='.jpg' && ext!='.jpeg' && ext!='.gif'){
+        return callback(new Error('Only images are allowed'));
+    }
+    callback(null, true);
+}, limits:{fileSize: 2097152}}).single('thumbnail');
 
 router.post('/upload', (req,res)=>{
     upload(req, res, (err)=>{
