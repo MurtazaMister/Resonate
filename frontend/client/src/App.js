@@ -16,6 +16,7 @@ import {Login} from './Page/Login';
 import {Register} from './Page/Register';
 import React, { createContext, useState } from 'react';
 import {useAuthContext} from './hooks/useAuthContext';
+import DisplayRoom from './Page/DisplayRoom';
 
 const CurrentMusic = createContext();
 
@@ -45,6 +46,7 @@ function App() {
                         <Route  path='/upload' component={user?UploadSong:Login} />
                         <Route  path='/rooms' component={user?Room:Login} />
                         <Route  path='/host' component={user?Host:Login} />    
+                        <Route  path='/displayroom' component={DisplayRoom} />  
                     </Switch>
                     <PlayBar />        
                 </CurrentMusic.Provider>

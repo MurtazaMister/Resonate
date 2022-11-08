@@ -1,0 +1,25 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.main {
+    display: inline;
+}
+
+.left {
+    max-width: 60%;
+}
+
+.right {
+    max-width: 40%;
+}
+
+span {
+    margin-left: 30px;
+}
+
+.leave {
+    height: 40px;
+    width: 230px;
+}
