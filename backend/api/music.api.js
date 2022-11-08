@@ -10,7 +10,7 @@ const Music = require('../models/music.model');
 // @route GET /public
 // @desc Getting all the public music files
 router.get('/public', async (req,res)=>{
-
+    console.log("hello world");
     let limitObj = {};
 
     if(req.query.limit && parseInt(req.query.limit)){
