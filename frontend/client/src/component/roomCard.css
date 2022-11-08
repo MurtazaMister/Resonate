@@ -3,31 +3,76 @@
 }
 
 .cards {
+    border-radius: 10px;
     height: 200px;
-    width: 1100px;
-    border: 2px solid white;
+    width: 100%;
     margin-top: 0px;
+    background-color: #2a2b2a;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.card-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding-top: 2px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.roomcard-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 2px;
+}
+
+.roomcard-bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .rectangle_2 {
     display: block;
+    height: 180px;
+    width: 180px;
+    border-radius: 5px;
+}
+
+.rectangle_2 img{
     width: 180px;
     height: 180px;
-    background: white;
-    margin-top: 10px;
-    margin-left: 10px;
-    float: left;
+}
+
+.room-title{
+    font-size: 30px;
+    margin:0;
+}
+
+.room-status{
+    color: green;
+    font-size: 14px;
+}
+
+.room-participants{
+    display: flex;
+    align-items: center;
+    margin-top: 7px;
 }
 
 .left {
     display: block;
-    float: left;
-    /* margin-right: 80px; */
 }
 
 div.right {
     display: block;
-    float: right;
-    margin-top: 10px;
-    margin-right: 40px;
 }

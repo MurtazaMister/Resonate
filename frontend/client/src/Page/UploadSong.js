@@ -162,6 +162,7 @@ const UploadSong = () => {
     e.preventDefault();
 
     if(activator.song && activator.image){
+      setDuration('');
       final_upload();
     }
     else{

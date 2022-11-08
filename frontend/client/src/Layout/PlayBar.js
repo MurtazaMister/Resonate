@@ -30,8 +30,8 @@ const PlayBar = (props) => {
         {currentMusic && <div className='music-info'>
             <img style={{width:"54px", height:"54px"}} src={(currentMusic?.thumbnail)?`${process.env.REACT_APP_SERVER}/api/thumbnail/${currentMusic?.thumbnail}`:""} alt={(currentMusic?.thumbnail)?currentMusic.title:""} />
             <div className='title-artist-area marquee'>
-                <span class="song-title">{currentMusic.title}</span>
-                <span class="song-artists">{currentMusic.artists}</span>
+                <span className="song-title">{currentMusic.title}</span>
+                <span className="song-artists">{currentMusic.artists}</span>
             </div>
         </div>}
             <audio style={{outline:"none"}} controls src={(currentMusic?.song)?`${process.env.REACT_APP_SERVER}/api/song/${currentMusic?.song}`:""} id="song" />
