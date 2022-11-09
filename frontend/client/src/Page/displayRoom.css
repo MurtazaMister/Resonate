@@ -3,27 +3,11 @@
     padding: 0px;
 }
 
-.main {
-    display: inline;
-}
-
-.left {
-    max-width: 65%;
-    margin: 0px;
-}
-
-div.right {
-    max-width: 30%;
-    margin: 0px;
-    margin-left: 40px;
-}
-
-span {
-    margin-left: 30px;
-}
-
-.leave {
-    height: 40px;
-    width: 230px;
-    margin-left: 320px;
+.body{
+    grid-column-start: 3;
+    grid-column-end: 13;
+    grid-row-start: 2;
+    grid-row-end: 12;
+    display: grid;
+    grid-template-columns: 60% 40%;
 }

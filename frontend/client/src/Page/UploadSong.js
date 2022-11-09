@@ -246,7 +246,7 @@ const UploadSong = () => {
     >
     <CircularProgress style={{position:"absolute"}} color="inherit" />
     </Backdrop>
-    <form style={{opacity:((load)?0.2:1)}} enctype="multipart/form-data" onSubmit={upload_event} className="content">
+    <form style={{opacity:((load)?0.2:1),display:"block"}} enctype="multipart/form-data" onSubmit={upload_event} className="content">
       <h2>Brew your music</h2>
       <div>
         <div className="rectangle">

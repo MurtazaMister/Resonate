@@ -10,7 +10,7 @@ const Toggle=({isPublic, setPublic, isAnonymous, setAnonymous}) => {
       };
 
   return (
-    <div className='content'>
+    <div style={{display:"block"}} className='content'>
       <h3 className='h_3'>Mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public {isPublic ? <BiToggleLeft className='left_right' onClick={() => handleChange()}/> : <BiToggleRight className='left_right' onClick={() => handleChange()}/>} private</h3>
 <br/>
       <h3 className='h_3'>Anonymous upload&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yes {isAnonymous ? <BiToggleLeft className='left_right' onClick={() => handleChange_1()}/> : <BiToggleRight className='left_right' onClick={() => handleChange_1()}/>} No</h3>

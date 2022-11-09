@@ -1,35 +1,85 @@
-.container_cards_2 {
+/* .container-cards_2 {
     border-radius: 10px;
-    max-height: 80px;
-    max-width: 100%;
-    display: block;
-    margin: 20px;
-    padding-left: 40px;
-    border: white solid 2px;
-}
+    height: fit-content;
+    width: 200px;
+} */
 
 div.cards_2 {
-    margin-top: 0px;
     background-color: #2a2b2a;
     border-radius: 10px;
-    max-height: 80px;
-    margin-bottom: 20px;
-    max-width: 100%;
-    display: block;
-    padding-left: 5px;
-}
-
-div.left_2 {
-    max-height: 70px;
-    max-width: 70px;
-    margin: 0px;
-}
-
-div.right_2 {
-    margin-left: 10px;
-    min-width: 90%;
+    width: inherit;
+    /* width: 350px; */
+    height: 62px;
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    margin-top: auto;
-    margin-bottom: auto;
+    padding: 3% 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.left_2{
+    margin-left: 6px;
+    width: 50px;
+    height: 50px;
+    transition: 1s;
+}
+
+.left_2 img{
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+.right_2{
+    margin-left: 9px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    transition: 1s;
+}
+
+.right_2 .title{
+    width: 100%;
+    font-size: larger;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.right_2 .singer{
+    font-size: smaller;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.duration{
+    margin: 0 15px;
+}
+
+@keyframes swipeIn {
+    0% {left: -50px;top:12px;}
+    100% {left: 11px;top:12px}
+}
+
+div.cards_2:hover .hover-playbtn {
+    animation: swipeIn 1s;
+    position: absolute;
+    top: 12px;
+    left: 11px;
+    visibility: visible;
+}
+
+div.cards_2:hover .left_2{
+    translate: 50px 0px;
+}
+
+div.cards_2:hover .right_2{
+    translate: 50px 0px;
+}
+
+div.cards_2:hover .duration{
+    visibility: hidden;
 }
