@@ -12,8 +12,8 @@ const RoomCard = (props)=> {
           <div className='card-data'>
             <div className="roomcard-top">
               <div className='roomcard-top-column'>
-                <h1 className='room-title'>Room name</h1>
-                <h4 className='room-status'>Online</h4>
+                <h1 className='room-title'>{props.name}</h1>
+                <h4 className='room-status' style={{color:(props.status=='Online')?"green":"red"}}>{props.status}</h4>
               </div>
               <div className='room-participants'>
                 {props.people}

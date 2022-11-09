@@ -23,7 +23,7 @@ const musicSchema = new Schema({
     },
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'users',
         required: false,
     },
     song: {

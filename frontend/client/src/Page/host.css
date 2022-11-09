@@ -2,32 +2,39 @@
     margin: 0px;
 }
 
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .create_room {
     padding: 10px;
     font-size: 20px;
     border: 2px solid white;
-    width: 600px;
-    height: 160px;
-    margin-top: 250px;
-    margin-left: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-label {
-    margin-left: 40px;
-}
-
-.roomname {
-    width: 300px;
-    margin: 40px;
+.inp{
+    display: flex;
+    justify-content: center;
+    margin-top: 7.5px;
 }
 
 .sub_button {
     height: 30px;
     width: 90px;
-    margin-left: 260px;
-    font-weight: 800;
+    font-weight: 600;
     padding: 0px;
     font-size: 18px;
-    margin-top: 20px;
     cursor: pointer;
+    margin-top: 7.5px;
+}
+
+#roomname{
+    margin-left: 15px;
+    margin-right: 15px;
+    height: 40px;
 }

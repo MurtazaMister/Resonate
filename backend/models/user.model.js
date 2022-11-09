@@ -9,7 +9,8 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     first_name: { type: String, required: true, trim: true, minlength: 2 },
     last_name: { type: String, required: true, trim: true, minlength: 2 },
-    email: { type: String, required: true }
+    email: { type: String, required: true },
+    room: {type: mongoose.Types.ObjectId, required: false, default: null},
 },{
     timestamps: true
 })

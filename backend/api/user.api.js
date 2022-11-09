@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const User = require('../models/user.model');
 const generateToken = require('../utilities/token');
+const auth = require('../middleware/auth.middleware');
+const {connectUser, disconnectUser} = require('../controllers/user.controller');
 
 // /api/user
 
@@ -40,5 +42,13 @@ router.post('/login',async (req,res)=>{
         res.status(400).json({error:err.message});
     }
 })
+
+// @route PATCH /connect
+// @desc Connecting the user to a room
+router.patch('/connect', auth, connectUser);
+
+// @route PATCH /disconnect
+// @desc When a user logs out, he/she should be disconnected from the room too, if they are in any
+router.patch('/disconnect',auth, disconnectUser);
 
 module.exports = router;

@@ -1,18 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import RoomCard from '../component/RoomCard';
 import {NavLink as Link} from 'react-router-dom';
 import "./Room.css";
+import { useAuthContext } from '../hooks/useAuthContext';
+import axios from 'axios';
 
 const Room = () => {
+
+  const {user} = useAuthContext();
+  const [rooms, setRooms] = useState([]);
+
+  useEffect(async ()=>{
+    let res = await axios.get(`${process.env.REACT_APP_SERVER}/api/room`,{
+      headers:{
+        'Authorization': `Bearer ${user.token}`,
+      },
+    });
+    await setRooms(res.data.rooms);
+  },[user]);
+
   return (
-    <div className="content">
+    <div className="content" style={{display:"block"}}>
       <h1>Your Parties</h1><br/>
       <Link className="link-reset" to="/displayroom"><RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/></Link><br/>
+      {
+        rooms.map((room)=>{
+          return <RoomCard key={room._id} name={room.roomname} people={room.members} status={room.status} music={room.music} time={room.createdAt} />
+        })
+      }
+      {/* <RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/><br/>
       <RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/><br/>
       <RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/><br/>
       <RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/><br/>
-      <RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/><br/>
-      <RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/><br/>
+      <RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/><br/> */}
     </div>
   )
 }

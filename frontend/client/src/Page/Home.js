@@ -5,7 +5,7 @@ import React from 'react';
 
 const Home = () => {
     return ( 
-        <div className="content">
+        <div className="content" style={{display:"block"}}>
             <PlayListTile />        
         </div> 
     );

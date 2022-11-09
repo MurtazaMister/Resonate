@@ -4,15 +4,25 @@ import { useHistory, NavLink as Link, useLocation } from "react-router-dom";
 import React from 'react';
 import { Tooltip, Zoom } from '@mui/material';
 import { useAuthContext } from '../hooks/useAuthContext';
+import axios from 'axios';
 
 const NavBar = () => {
   const history = useHistory();
   let location = useLocation();
   const {dispatch, user} = useAuthContext();
 
-  function handleLogout(){
-    localStorage.removeItem('user');
-    dispatch({type: 'LOGOUT'})
+  async function handleLogout(){
+    try {
+      let res = await axios.patch(`${process.env.REACT_APP_SERVER}/api/user/disconnect`,{},{
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
+      localStorage.removeItem('user');
+      dispatch({type: 'LOGOUT'})
+    } catch (err) {
+      console.log(err);
+    }
   }
 
     return ( 

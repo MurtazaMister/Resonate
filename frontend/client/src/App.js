@@ -46,7 +46,7 @@ function App() {
                         <Route  path='/upload' component={user?UploadSong:Login} />
                         <Route  path='/rooms' component={user?Room:Login} />
                         <Route  path='/host' component={user?Host:Login} />    
-                        <Route  path='/displayroom' component={DisplayRoom} />  
+                        <Route  path='/room' component={user?DisplayRoom:Login} />  
                     </Switch>
                     <PlayBar />        
                 </CurrentMusic.Provider>

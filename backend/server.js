@@ -13,6 +13,7 @@ const api_music_router = require("./api/music.api");
 const api_thumbnail_router = require("./api/thumbnail.api");
 const api_song_router = require('./api/song.api');
 const api_user_router = require('./api/user.api');
+const api_room_router = require('./api/room.api');
 
 require("dotenv").config();
 
@@ -38,6 +39,7 @@ app.use('/api/song',function(req,res,next){
     next();
 },api_song_router);
 app.use('/api/user',api_user_router);
+app.use('/api/room',api_room_router);
 
 const port = process.env.port || 5000;
 

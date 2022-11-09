@@ -2,16 +2,20 @@ import { Songs } from "../db/db";
 import MusicCard from "../component/MusicCard";
 import axios from 'axios';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from "react-dom";
 import { useState, useEffect } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
+import {useDraggable} from 'react-use-draggable-scroll';
 
 const PlayListTile = () => {
     
     const {user} = useAuthContext();
     const [songs, setSongs] = useState([]);
 
+    const [ref,ref2,ref3]= [useRef(),useRef(),useRef()]
+    const [{events},{events:events2},{events:events3}] = [useDraggable(ref, {applyRubberBandEffect:true}),useDraggable(ref2, {applyRubberBandEffect:true}),useDraggable(ref3, {applyRubberBandEffect:true})]
+    
     useEffect(async ()=>{
         await setSongs([]);
         
@@ -21,6 +25,8 @@ const PlayListTile = () => {
             return [{
                 title: "Recently Added",
                 list: music_public.data,
+                ref: ref,
+                events: events,
             }]
         });
 
@@ -34,6 +40,8 @@ const PlayListTile = () => {
             return [...songs,{
                 title: "Your uploads",
                 list: music_self.data,
+                ref: ref2,
+                events: events2,
             }]
         });
 
@@ -47,6 +55,8 @@ const PlayListTile = () => {
             return [...songs,{
                 title: "Your private collection",
                 list: music_private.data,
+                ref: ref3,
+                events: events3,
             }]
         });
 
@@ -56,7 +66,7 @@ const PlayListTile = () => {
               'Authorization': `Bearer ${user.token}`,
             },
         });
-        console.log(music_artists.data);    
+         
         await setSongs((songs)=>{
             return [...songs, ...music_artists.data.map(music_ele=>{
                 return music_ele.artists.length?{
@@ -72,13 +82,18 @@ const PlayListTile = () => {
     },[user]);
 
     return (
-        songs.map((tile) => tile?.list?.length?( 
+        <>
+        <div {...events} ref={ref} style={{display:"flex",flexDirection:"row", overflowX:"scroll",display:"none"}} />
+        <div {...events2} ref={ref2} style={{display:"flex",flexDirection:"row", overflowX:"scroll",display:"none"}} />
+        <div {...events3} ref={ref3} style={{display:"flex",flexDirection:"row", overflowX:"scroll",display:"none"}} />
+        {songs.map((tile) => tile?.list?.length?( 
             <div className = "genre-tile" key = { tile.title } >
                 <div className = "genre-header" >
                     <h1 style = {{ fontSize: "clamp(20px,2vw ,24px)" , textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap" } } > { tile.title } </h1>  
                     <h5 style = {{ color: "rgba(255,255,255,0.70)", textOverflow:"ellipsis",overflow:"hidden",whiteSpace:"nowrap"  } } > See more </h5> 
                 </div> 
-                <div className="music-list">
+                
+                <div className="music-list" {...(tile.events)?(tile.events):{}} ref={(tile.ref)?(tile.ref):{}}>
                     {
                         tile.list.map((genreTile) => ( 
                             <MusicCard parser = { genreTile } styleCheck="true" key={genreTile.song} />                     
@@ -86,7 +101,8 @@ const PlayListTile = () => {
                     }  
                 </div>
             </div>
-        ):'')
+        ):'')}
+        </>
     );
 }
 
