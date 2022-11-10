@@ -5,7 +5,8 @@ const auth = require('../middleware/auth.middleware');
 const router = express.Router();
 const Room = require('../models/room.model');
 const User = require('../models/user.model');
-const {connectUser} = require('../controllers/user.controller');
+const {connectUser, disconnectUser} = require('../controllers/user.controller');
+const { leave } = require('../controllers/room.controller');
 
 // /api/room
 
@@ -33,15 +34,72 @@ router.post('/create', auth, async (req,res)=>{
     }
 
     roomObj = new Room(roomObj);
-    await roomObj.save((err,doc)=>{
-        if(!err){
-            req.body.room = roomObj._id;
-            connectUser(req,res);
+    req.body.room = roomObj._id;
+    try {
+        let res_ans = await connectUser(req,res);
+
+        if(res_ans?.status=='success'){
+            await roomObj.save(async (err,doc)=>{
+                if(err){
+                    await disconnectUser(req,res);
+                    res.status(400).json({status:"fail", error:err.message})
+                }
+            })
+            res.status(200).json({status:'success',_id:roomObj._id});
         }
         else{
-            res.status(400).json({status:"fail", err:err.message})
+            res.status(400).json({status:"fail", error:'User already in a room'})
         }
-    })
+    } catch (err) {
+        res.status(400).json({status:"fail", error:'User already in a room'})
+    }
+});
+
+// @route PATCH /leave
+// @desc Handling all the changes when a user leaves a room (updating room members, master and slaves and the status)
+router.patch('/leave',auth, async (req,res)=>{
+    try {
+        let res_ans = await leave(req,res);
+        if(res_ans.status == 'success'){
+            res.status(200).json({status:'success'})
+        }
+        else{
+            res.status(400).json({status:'fail'})
+        }
+    } catch (err) {
+        res.status(400).json({status:'fail',error:err.message});
+    }
+})
+
+// @route PATCH /:id
+// @desc To handle joining of a room by any user, checking every condition that user is not a part of any other room and then updating the room status, members, master and slaves accordingly
+router.patch('/:id',auth, async (req,res)=>{
+    try {
+        req.body.room = req.params.id;
+        let res_ans = await connectUser(req,res);
+        if(res_ans?.status=='success'){
+            let room = await Room.findById(mongoose.Types.ObjectId(req.params.id));
+            room.members++;
+            room.status = 'Online';
+            if(room.master == null){
+                room.master = mongoose.Types.ObjectId(req.user);
+            }
+            else{
+                room.slaves.push(mongoose.Types.ObjectId(req.user));
+            }
+            await Room.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id),room);
+        }
+        else{
+            if(res_ans?.room.toString() == req.params.id){
+                res.status(200).json({status:'success'})
+            }
+            else{
+                res.status(400).json({status:'fail'});
+            }
+        }
+    } catch (err) {
+        res.status(400).json({status:'fail',error:err.message});
+    }
 })
 
 module.exports = router;

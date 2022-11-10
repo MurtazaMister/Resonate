@@ -13,7 +13,7 @@ const NavBar = () => {
 
   async function handleLogout(){
     try {
-      let res = await axios.patch(`${process.env.REACT_APP_SERVER}/api/user/disconnect`,{},{
+      let res = await axios.patch(`${process.env.REACT_APP_SERVER}/api/room/leave`,{},{
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
@@ -34,7 +34,12 @@ const NavBar = () => {
             <IoChevronForwardCircleOutline onClick={()=>history.goForward()} />
             
           </div>
-          { user && <div className="nav-grid">
+          { user && <div className="nav-grid" style={{gridTemplateColumns: (user.room)?"repeat(3,1fr)":"repeat(2,1fr)"}}>
+
+          {user.room && <button className="user-btn">
+                  {user.room}
+          </button>}
+
           <button className="upgrade-btn">
               UPGRADE
             </button>

@@ -22,13 +22,13 @@ const Host = () => {
             }
           });
           if(res.data.status == "success"){
-            history.push('/room')
+            history.push(`/room/${res.data._id}`);
           }
           else{
-            setErr("Error creating room");
+            setErr("User already in a room");
           }
         } catch (err) {
-          setErr("Error creating room");
+          setErr("User already in a room");
         }  
     };
   return (
@@ -42,7 +42,7 @@ const Host = () => {
           <input type="text" id="roomname" name="roomname" className='roomname' value={name} onChange={(e) => setName(e.target.value)}/>
         </div>
         <button type="submit" className='sub_button'>Create</button>
-        {err && <span style={{color:"red", marginTop:"15px", fontSize:"16px"}}>Error creating room</span>}
+        {err && <span style={{color:"red", marginTop:"15px", fontSize:"16px"}}>{err}</span>}
       </form>
     </div>
   )
