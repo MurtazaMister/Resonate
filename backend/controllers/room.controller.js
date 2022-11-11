@@ -3,7 +3,7 @@ const Room = require('../models/room.model');
 const { disconnectUser } = require('./user.controller');
 
 async function leave(req,res){
-    let user_id = req.user;
+    let user_id = req.user._id;
 
     try {
         let room_id = await disconnectUser(req,res);
@@ -13,8 +13,8 @@ async function leave(req,res){
             }
         }
         let room = await Room.findById(mongoose.Types.ObjectId(room_id));
-        if(user_id.toString() === room.master.toString()){
-            [room.master] = room.slaves.splice(0,1) || null;
+        if(user_id.toString() == room.master.toString()){
+            room.master = room.slaves.splice(0,1)[0] || null;
         }
         else{
             room.slaves.splice(room.slaves.indexOf(mongoose.Types.ObjectId(user_id)),1);

@@ -117,7 +117,6 @@ router.post('/queue', auth, async (req,res)=>{
             status: 'success'
         })
     } catch (err) {
-        console.log(err);
         res.status(400).json({
             status: 'fail',
             error: err.message,

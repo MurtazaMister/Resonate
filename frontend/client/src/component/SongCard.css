@@ -83,7 +83,7 @@ div.cards_2:hover .right_2{
 div.cards_2:hover .duration{
     visibility: hidden;
 }
-
+/* 
 .marquee {
     white-space: nowrap;
     overflow: hidden;
@@ -99,4 +99,4 @@ div.cards_2:hover .duration{
     0%   { transform: translate(100%, 0); }
     99.99% { transform: translate(-110%, 0); }
     100%   { transform: translate(100%, 0); }
-}
+} */

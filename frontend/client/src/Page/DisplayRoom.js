@@ -19,7 +19,6 @@ const DisplayRoom = (props) => {
     const [songs, setSongs] = useState([]);
 
     useEffect(async ()=>{
-        console.log('currentqueue', currentQueue);
         let res = await axios.post(`${process.env.REACT_APP_SERVER}/api/room/queue`,{
             queue: currentQueue,
             roomId: currentRoom._id,
@@ -31,16 +30,15 @@ const DisplayRoom = (props) => {
     },[currentQueue])
 
     useEffect(async ()=>{
-        if(currentRoom?.queue.length){
+        if(Object.keys(currentRoom.queue).length){
             setCurrentQueue({
-                nowPlaying:(currentRoom.queue.length)?currentRoom.queue[0]:null,
-                comingUpNext:(currentRoom.queue.length-1>0)?[currentRoom.queue.splice(1)]:[],
+                nowPlaying:(Object.keys(currentRoom.queue).length)?currentRoom.queue.nowPlaying:null,
+                comingUpNext:(Object.keys(currentRoom.queue).length-1>0)?currentRoom.queue.comingUpNext:[],
             })
         }
     },[currentRoom])
     
     useEffect(async ()=>{
-        console.log("exec2");
         let room_id = window.location.href.split('/')[4].substring(0,24)
         let res = await axios.patch(`${process.env.REACT_APP_SERVER}/api/room/${room_id}`,{},{
         headers:{
@@ -89,7 +87,6 @@ const DisplayRoom = (props) => {
                         }
                     </div>
                 </div>
-                {console.log(currentQueue)}
                 {!currentQueue && <div className='empty'>Queue is empty</div>}
                 {currentQueue && <div style={{overflow: "auto",display: "flex",flexDirection: "column",}}>
                     <div className='now-playing'>
