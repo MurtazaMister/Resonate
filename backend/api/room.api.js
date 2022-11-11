@@ -45,7 +45,7 @@ router.post('/create', auth, async (req,res)=>{
                     res.status(400).json({status:"fail", error:err.message})
                 }
             })
-            res.status(200).json({status:'success',_id:roomObj._id});
+            res.status(200).json({status:'success',_id:roomObj._id,room:roomObj});
         }
         else{
             res.status(400).json({status:"fail", error:'User already in a room'})
@@ -76,9 +76,9 @@ router.patch('/leave',auth, async (req,res)=>{
 router.patch('/:id',auth, async (req,res)=>{
     try {
         req.body.room = req.params.id;
+        let room = await Room.findById(mongoose.Types.ObjectId(req.params.id));
         let res_ans = await connectUser(req,res);
         if(res_ans?.status=='success'){
-            let room = await Room.findById(mongoose.Types.ObjectId(req.params.id));
             room.members++;
             room.status = 'Online';
             if(room.master == null){
@@ -88,10 +88,11 @@ router.patch('/:id',auth, async (req,res)=>{
                 room.slaves.push(mongoose.Types.ObjectId(req.user));
             }
             await Room.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id),room);
+            res.status(200).json({status:'success', room})
         }
         else{
             if(res_ans?.room.toString() == req.params.id){
-                res.status(200).json({status:'success'})
+                res.status(200).json({status:'success', room})
             }
             else{
                 res.status(400).json({status:'fail'});
@@ -101,5 +102,28 @@ router.patch('/:id',auth, async (req,res)=>{
         res.status(400).json({status:'fail',error:err.message});
     }
 })
+
+// @route PATCH /queue
+// @desc To update the queue with the database
+router.post('/queue', auth, async (req,res)=>{
+    try {
+        let {queue, roomId} = req.body;
+        await Room.findByIdAndUpdate(roomId,{
+            $set: {
+                queue,
+            }
+        })
+        res.status(200).json({
+            status: 'success'
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({
+            status: 'fail',
+            error: err.message,
+        })
+    }
+})
+
 
 module.exports = router;

@@ -5,14 +5,30 @@ import React from 'react';
 import { Tooltip, Zoom } from '@mui/material';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
+import {CurrentRoom} from '../App';
+import { useContext } from 'react';
+import { AiFillCrown } from 'react-icons/ai';
+import {GoPrimitiveDot} from 'react-icons/go';
+import { useEffect } from 'react';
 
 const NavBar = () => {
+  const {currentRoom, setCurrentRoom} = useContext(CurrentRoom);
   const history = useHistory();
   let location = useLocation();
   const {dispatch, user} = useAuthContext();
 
+  useEffect(async ()=>{
+    let res = await axios.get(`${process.env.REACT_APP_SERVER}/api/user/check`,{
+      headers: {
+        'Authorization': `Bearer ${user.token}`
+      }
+    });
+    setCurrentRoom(res.data.room)
+  },[user])
+
   async function handleLogout(){
     try {
+      setCurrentRoom();
       let res = await axios.patch(`${process.env.REACT_APP_SERVER}/api/room/leave`,{},{
         headers: {
           'Authorization': `Bearer ${user.token}`
@@ -34,11 +50,19 @@ const NavBar = () => {
             <IoChevronForwardCircleOutline onClick={()=>history.goForward()} />
             
           </div>
-          { user && <div className="nav-grid" style={{gridTemplateColumns: (user.room)?"repeat(3,1fr)":"repeat(2,1fr)"}}>
+          { user && <div className="nav-grid" style={{gridTemplateColumns: (currentRoom)?"40px 1fr 1fr":"repeat(2,1fr)"}}>
 
-          {user.room && <button className="user-btn">
-                  {user.room}
-          </button>}
+          {currentRoom && 
+          <Link className="link-reset" style={{width:"fit-content"}} to={`/room/${currentRoom._id}`}>
+          <Tooltip TransitionComponent={Zoom} title={currentRoom.roomname}>
+            <button style={{width:"40px"}} className="user-btn">
+              {(currentRoom.master==user._id)?<AiFillCrown style={{color: "gold", fontSize: "1.5em"}} />:
+                <GoPrimitiveDot style={{color: "green", fontSize: "1.5em"}} />
+              }
+          </button>
+          </Tooltip>
+          </Link>
+          }
 
           <button className="upgrade-btn">
               UPGRADE

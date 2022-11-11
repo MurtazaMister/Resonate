@@ -6,7 +6,7 @@ const roomSchema = new Schema({
     master: {type: mongoose.Types.ObjectId, ref: 'users', required:true},
     slaves: {type: Array},
     music: {type:Object},
-    queue: {type:Array},
+    queue: {type:Object},
     status: {type:String, enum: ['Online','Offline'], default: 'Online'},
     members: {type:Number},
 },{

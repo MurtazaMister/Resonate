@@ -1,0 +1,33 @@
+/* .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.Mui-expanded.MuiAccordion-gutters.css-1elwnq4-MuiPaper-root-MuiAccordion-root{
+    margin: 0!important;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.Mui-expanded.MuiAccordion-gutters.css-1elwnq4-MuiPaper-root-MuiAccordion-root{
+    overflow: hidden;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.Mui-expanded.MuiAccordion-gutters.css-1elwnq4-MuiPaper-root-MuiAccordion-root{
+    display: flex;
+    flex-direction: column;
+}
+
+.MuiCollapse-root.MuiCollapse-vertical.MuiCollapse-entered.css-pwcg7p-MuiCollapse-root{
+    overflow: hidden;
+}
+ */
+
+.song-list-container{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.song-list-title{
+    padding: 0px 25px;
+    padding-top: 10px;
+}
+
+.song-list-collection{
+    overflow: scroll;
+    padding: 10px 25px;
+}

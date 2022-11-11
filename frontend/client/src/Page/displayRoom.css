@@ -11,3 +11,47 @@
     display: grid;
     grid-template-columns: 60% 40%;
 }
+
+.select{
+    overflow: hidden;
+}
+
+.empty{
+    display: flex;
+    justify-content: center;
+    margin-top: 13px;
+    font-size: 20px;
+}
+
+.now-playing > *{
+    color:gold;
+}
+
+.mega-container{
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+    overflow: hidden;
+}
+
+.queue{
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-div{
+    padding: 0 10px;
+    position: relative;
+}
+
+#search{
+    outline: none;
+    max-width: 100%!important;   
+    float: none;
+    padding: 10px;
+}
+
+.select{
+    display: flex;
+    flex-direction: column;
+}

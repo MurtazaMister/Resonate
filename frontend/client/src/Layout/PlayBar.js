@@ -16,14 +16,22 @@ import ReactDOM from "react-dom";
 
 import { CurrentMusic } from '../App';
 import { useContext } from 'react';
+import { CurrentQueue } from '../App';
 
 const PlayBar = (props) => {
 
-    const {currentMusic} = useContext(CurrentMusic);
+    const {currentMusic, setCurrentMusic} = useContext(CurrentMusic);
+    const {currentQueue, setCurrentQueue} = useContext(CurrentQueue);
 
     useEffect(async ()=>{
         await document.getElementById('song').play();
     },[currentMusic])
+
+    useEffect(async ()=>{
+        if(currentQueue && currentQueue.nowPlaying){
+            setCurrentMusic({...currentQueue.nowPlaying,room:true,_id:(currentQueue.nowPlaying._id.substring(0,24))})
+        }
+    },[currentQueue])
     
     return ( 
         <footer className="music-bar d-flex justify-content-center p-2">

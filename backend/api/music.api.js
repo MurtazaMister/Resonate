@@ -38,7 +38,6 @@ router.get('/public', async (req,res)=>{
             limitObj,
             {
                 $project: {
-                    _id: 0,
                     thumbnail: 1,
                     title: 1,
                     artists: 1,
@@ -91,7 +90,6 @@ router.get('/self', auth, async (req,res)=>{
             limitObj,
             {
                 $project: {
-                    _id: 0,
                     thumbnail: 1,
                     title: 1,
                     artists: 1,
@@ -145,7 +143,6 @@ router.get('/private',auth, async (req,res)=>{
             limitObj,
             {
                 $project: {
-                    _id: 0,
                     thumbnail: 1,
                     title: 1,
                     artists: 1,

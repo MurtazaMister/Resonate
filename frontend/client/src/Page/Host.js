@@ -4,8 +4,11 @@ import './host.css';
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import { useAuthContext } from '../hooks/useAuthContext';
+import {CurrentRoom} from '../App';
+import { useContext } from 'react';
 
 const Host = () => {
+    const {currentRoom, setCurrentRoom} = useContext(CurrentRoom);
     const [name, setName] = useState("");
     const [err, setErr] = useState(undefined);
     const {user} = useAuthContext();
@@ -22,6 +25,7 @@ const Host = () => {
             }
           });
           if(res.data.status == "success"){
+            setCurrentRoom(res.data.room);
             history.push(`/room/${res.data._id}`);
           }
           else{

@@ -19,41 +19,49 @@ import {useAuthContext} from './hooks/useAuthContext';
 import DisplayRoom from './Page/DisplayRoom';
 
 const CurrentMusic = createContext();
+const CurrentRoom = createContext();
+const CurrentQueue = createContext();
 
 function App() {
 
     const {user} = useAuthContext();
     const [currentMusic, setCurrentMusic] = useState(undefined);
+    const [currentRoom, setCurrentRoom] = useState();
+    const [currentQueue, setCurrentQueue] = useState();
 
     return ( 
         <Router >
         <ScrollToTop />
             <div className = "App" >            
-                <NavBar />
-                <SideBar />
-                <CurrentMusic.Provider value={{currentMusic,setCurrentMusic}}>
-                    <Switch>
-                        <Route exact path='/' component={Home}/>
-                        <Route path='/search' component={SearchPg} />
-                        <Route  path='/songs/:id' component={SongPage} />    
+                <CurrentRoom.Provider value={{currentRoom, setCurrentRoom}}>
+                    <CurrentQueue.Provider value={{currentQueue, setCurrentQueue}}>
+                    <NavBar />
+                    <SideBar />
+                    <CurrentMusic.Provider value={{currentMusic,setCurrentMusic}}>
+                        <Switch>
+                            <Route exact path='/' component={Home}/>
+                            <Route path='/search' component={SearchPg} />
+                            <Route  path='/songs/:id' component={SongPage} />    
 
-                        <Route exact path='/login' component={!user?Login:Home}/>
-                        <Route exact path='/register' component={!user?Register:Home}/>
+                            <Route exact path='/login' component={!user?Login:Home}/>
+                            <Route exact path='/register' component={!user?Register:Home}/>
 
-                        <Route exact path='/collection' component={user?Library:Login} />
-                        <Route  path='/collection/tracks' component={user?LikedSongs:Login} />
-                        <Route  path='/add' component={user?CreatePlaylist:Login} />
-                        <Route  path='/upload' component={user?UploadSong:Login} />
-                        <Route  path='/rooms' component={user?Room:Login} />
-                        <Route  path='/host' component={user?Host:Login} />    
-                        <Route  path='/room' component={user?DisplayRoom:Login} />  
-                    </Switch>
-                    <PlayBar />        
-                </CurrentMusic.Provider>
+                            <Route exact path='/collection' component={user?Library:Login} />
+                            <Route  path='/collection/tracks' component={user?LikedSongs:Login} />
+                            <Route  path='/add' component={user?CreatePlaylist:Login} />
+                            <Route  path='/upload' component={user?UploadSong:Login} />
+                            <Route  path='/rooms' component={user?Room:Login} />
+                            <Route  path='/host' component={user?Host:Login} />    
+                            <Route  path='/room' component={user?DisplayRoom:Login} />  
+                        </Switch>
+                        <PlayBar />        
+                    </CurrentMusic.Provider>
+                    </CurrentQueue.Provider>
+                </CurrentRoom.Provider>
             </div>
         </Router>
     );
 }
 
 export default App;
-export {CurrentMusic}
+export {CurrentMusic, CurrentRoom, CurrentQueue};

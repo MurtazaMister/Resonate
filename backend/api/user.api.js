@@ -9,6 +9,44 @@ const {connectUser, disconnectUser} = require('../controllers/user.controller');
 
 // /api/user
 
+// @route GET /check
+// @desc Check if user is in any room or not
+router.get('/check',auth, async (req,res)=>{
+    try{
+        let room = await User.aggregate([
+            {
+                $match: {
+                    _id: mongoose.Types.ObjectId(req.user)
+                }
+            },
+            {
+                $lookup: {
+                    from: 'rooms',
+                    localField: 'room',
+                    foreignField: '_id',
+                    as: '_room'
+                }
+            },
+            {
+                $unwind: "$_room"
+            },
+            {
+                $project: {
+                    "room": "$_room",
+                    _id: 0,
+                }
+            }
+        ])
+        res.status(200).json({
+            status: 'success',
+            room: room[0].room,
+        })
+    }
+    catch(err){
+        res.status(400).json({status:'fail', error:err.message});
+    }
+})
+
 // @route POST /signup
 // @desc Used for signing up the user and returning a token
 router.post('/signup',async (req,res)=>{
@@ -20,7 +58,7 @@ router.post('/signup',async (req,res)=>{
         // generating a token
         const token = generateToken(user._id);
 
-        res.status(200).json({username,token});
+        res.status(200).json({username,token,_id:user._id});
     } catch (err) {
         res.status(400).json({error:err.message});
     }
@@ -37,7 +75,7 @@ router.post('/login',async (req,res)=>{
         // generating a token
         const token = generateToken(user._id);
 
-        return res.status(200).json({username,token});
+        return res.status(200).json({username,token,_id:user._id});
     } catch (err) {
         res.status(400).json({error:err.message});
     }

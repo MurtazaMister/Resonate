@@ -2,11 +2,15 @@ import { BsPlayFill  } from 'react-icons/bs'
 import {NavLink} from 'react-router-dom'
 import React, { useContext } from 'react';
 import { CurrentMusic } from '../App';
+import { CurrentQueue } from '../App';
 
 const MusicCard = ({parser,styleCheck}) => {
     const {currentMusic, setCurrentMusic} = useContext(CurrentMusic);
+    const {currentQueue, setCurrentQueue} = useContext(CurrentQueue);
     function playSong(){
-        setCurrentMusic(parser);
+        if(!currentQueue || !currentQueue.nowPlaying){
+            setCurrentMusic(parser);
+        }
     }
 
     return ( 
