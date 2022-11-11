@@ -10,6 +10,8 @@ import LikedSongs from './Page/Liked';
 import SongPage from './Page/SongPage';
 import CreatePlaylist from './Page/CreatePlaylist';
 import UploadSong from './Page/UploadSong';
+import ErrorPage from './Page/ErrorPage';
+import ComingSoon from './Page/ComingSoon';
 import Room from './Page/Room';
 import Host from './Page/Host';
 import {Login} from './Page/Login';
@@ -45,19 +47,22 @@ function App() {
                     <CurrentMusic.Provider value={{currentMusic,setCurrentMusic}}>
                         <Switch>
                             <Route exact path='/' component={Home}/>
-                            <Route path='/search' component={SearchPg} />
-                            <Route  path='/songs/:id' component={SongPage} />    
+                            <Route path='/search' component={SearchPg} /> 
 
                             <Route exact path='/login' component={!user?Login:Home}/>
                             <Route exact path='/register' component={!user?Register:Home}/>
-
-                            <Route exact path='/collection' component={user?Library:Login} />
-                            <Route  path='/collection/tracks' component={user?LikedSongs:Login} />
-                            <Route  path='/add' component={user?CreatePlaylist:Login} />
+                            {/* Library */}
+                            <Route exact path='/collection' component={user?ComingSoon:Login} />
+                            {/* LikedSongs */}
+                            <Route  path='/collection/tracks' component={user?ComingSoon:Login} />
+                            {/* CreatePlaylist */}
+                            <Route  path='/add' component={user?ComingSoon:Login} />
                             <Route  path='/upload' component={user?UploadSong:Login} />
                             <Route  path='/rooms' component={user?Room:Login} />
                             <Route  path='/host' component={user?Host:Login} />    
                             <Route  path='/room' component={user?DisplayRoom:Login} />  
+                            <Route  path='/upgrade' component={user?ComingSoon:Login} />  
+                            <Route  path='*' component={ErrorPage} />  
                         </Switch>
                         <PlayBar />        
                     </CurrentMusic.Provider>

@@ -6,6 +6,7 @@ const { Server } = require('socket.io');
 const connectDB = require("./db/connect");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const Room = require("./models/room.model");
 
 require("dotenv").config();
 
@@ -25,21 +26,21 @@ const io = new Server(server, {
 
 io.on("connection",(socket)=>{
     socket.on('join_room', (data)=>{
-        console.log('someone joined room');
         socket.join(data);
     });
     
-    socket.on('leave_room', (data)=>{
-        console.log('someone left room');
+    socket.on('leave_room', async (data)=>{
         socket.leave(data);
+        let room = await Room.findById(data);
+        socket.broadcast.to(data).emit('updated_room', room);
     });
 
     socket.on("set_queue", (data)=>{
         socket.broadcast.to(data.room).emit('get_queue', data.queue);
     });
 
-    socket.on("set_current_music", (data)=>{
-        socket.broadcast.to(data.room).emit('get_current_music', data.music);
+    socket.on("set_music", (data)=>{
+        socket.broadcast.to(data.room).emit('get_music', data.music);
     });
 })
 

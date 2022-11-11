@@ -74,9 +74,9 @@ const SongCard = ({song,type})=> {
     <div className="cards_2" style={{margin:"4px 0px"}}>
       {
         (type=='add')?
-        <BiAddToQueue onClick={addSong} className="hover-playbtn" style={{background:"#666666",cursor:"pointer"}} viewBox='-7.6 -7 40 40' />
+        <BiAddToQueue onClick={addSong} className="hover-playbtn" style={{display:"block",background:"#666666",cursor:"pointer"}} viewBox='-7.6 -7 40 40' />
         :
-        <MdDelete onClick={deleteSong} style={{background:"#ff0000cc",cursor:"pointer"}} viewBox='-7.6 -7 40 40'  className="hover-playbtn" />
+        <MdDelete onClick={deleteSong} style={{display:"block",background:"#ff0000cc",cursor:"pointer"}} viewBox='-7.6 -7 40 40'  className="hover-playbtn" />
       }
         <div className="left_2">
             <img loading="lazy" src={`${process.env.REACT_APP_SERVER}/api/thumbnail/${song.thumbnail}`} alt="s"  />

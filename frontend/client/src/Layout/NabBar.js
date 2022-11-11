@@ -28,7 +28,7 @@ const NavBar = () => {
     });
     if(res.data.status=='success'){
         socket.emit('leave_room', currentRoom._id);
-        setCurrentRoom();
+        await setCurrentRoom();
         setCurrentQueue();
         history.replace('/')
     }
@@ -88,11 +88,11 @@ const NavBar = () => {
           </Tooltip>
           </Link>
           )}
-
+          <Link className="link-reset" style={{width:"fit-content"}} to={`/upgrade`}>
           <button className="upgrade-btn">
               UPGRADE
             </button>
-
+            </Link>
             <Tooltip TransitionComponent={Zoom} title={user.username}>
               <button className="user-btn" onClick={handleLogout}>
                   Logout

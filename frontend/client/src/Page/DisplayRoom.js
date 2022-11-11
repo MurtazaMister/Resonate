@@ -18,11 +18,27 @@ const DisplayRoom = (props) => {
     const {currentRoom, setCurrentRoom} = useContext(CurrentRoom);
     const {currentQueue, setCurrentQueue} = useContext(CurrentQueue);
     const [songs, setSongs] = useState([]);
+    const [filterSongs, setFilterSongs] = useState([]);
     const socket = useContext(Socket);
+    const [searchValue, setSearchValue] = useState('');
+
+    useEffect(async ()=>{
+        if(searchValue){
+            await setFilterSongs([{...songs[0], list:songs[0].list.filter((song)=>(song.title.toLowerCase().includes(searchValue.toLowerCase()) || song.artists.toLowerCase().includes(searchValue.toLowerCase())))},{...songs[1], list:songs[1].list.filter((song)=>(song.title.toLowerCase().includes(searchValue.toLowerCase()) || song.artists.toLowerCase().includes(searchValue.toLowerCase())))}])
+        }
+        else{
+            setFilterSongs();
+        }
+    },[searchValue])
 
     useEffect(async ()=>{
         socket.on('get_queue',(queue)=>{
             setCurrentQueue(queue);
+        })
+
+        socket.on('updated_room',(room)=>{
+            console.log(room);
+            setCurrentRoom(room);
         })
     }, [socket])
 
@@ -87,14 +103,18 @@ const DisplayRoom = (props) => {
             <div className="body">
                 <div className="select">
                     <div className="search-div">
-                        <input type="text" name="search" id="search" style={{width:"100%"}} />
+                        <input value={searchValue} onChange={(e)=>{
+                            setSearchValue(e.target.value);
+                        }} type="text" name="search" id="search" style={{width:"100%"}} />
                         <BiSearchAlt style={{position: "absolute",top: "38%",right: "5%",color: "black",}} />
                     </div>
                     <div className='mega-container'>
                         {
-                            (songs?.length==2) && songs.map((song)=>{
+                            (filterSongs?.length==2) ? filterSongs.map((song)=>{
                                 return <SongListing key={song.title} type="add" song={song} />
-                            })
+                            }) : ((songs?.length==2) && songs.map((song)=>{
+                                return <SongListing key={song.title} type="add" song={song} />
+                            }))
                         }
                     </div>
                 </div>

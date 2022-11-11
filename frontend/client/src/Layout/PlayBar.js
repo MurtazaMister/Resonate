@@ -26,12 +26,47 @@ const PlayBar = (props) => {
     const {currentRoom} = useContext(CurrentRoom);
     const {user} = useAuthContext();
     const socket = useContext(Socket);
+    let interval;
+
+    useEffect(()=>{
+        if(currentRoom && currentRoom.master.toString() != user._id.toString()){
+            socket.on('get_music', (music)=>{
+                if(music.paused && !document.getElementById('song').paused){
+                    document.getElementById('song').pause();
+                }
+                else if(!music.paused && document.getElementById('song').paused){
+                    document.getElementById('song').play();
+                }
+                if(Math.abs(document.getElementById('song').currentTime - Number(music.currentTime)) > 0.5){
+                    document.getElementById('song').currentTime = Number(music.currentTime);
+                }
+            });
+        }
+    },[socket])
+
+    useEffect(()=>{
+        clearInterval(interval);
+        // console.log("in playbar");
+        if(currentRoom && currentRoom.master.toString() == user._id.toString()){
+            // console.log("setting interval");
+            interval = setInterval(()=>{
+                socket.emit('set_music',{
+                    room:currentRoom._id,
+                    music:{...currentMusic,
+                    paused: document.getElementById('song').paused,
+                    currentTime: (document.getElementById('song').currentTime),}
+                })
+
+            },2000);
+            return () => clearInterval(interval);
+        }
+    },[currentRoom])
 
     async function endHandler(){
         let actualDuration = Number(currentMusic.duration.split(':')[0])*60 + Number(currentMusic.duration.split(':')[1]);
         let stallDuration = document.getElementById('song').currentTime;
         if(currentQueue && currentQueue.comingUpNext.length && Math.abs(actualDuration - stallDuration) < 5 &&
-        ((!currentRoom) || (currentRoom && currentRoom.master.toString() == user._id.toString()))){
+        (!currentRoom || (currentRoom && currentRoom.master.toString() == user._id.toString()))){
             socket.emit('set_queue', {
                 queue:{nowPlaying:(currentQueue.comingUpNext.length)?currentQueue.comingUpNext[0]:null,
                 comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.slice(1):[],
@@ -44,7 +79,7 @@ const PlayBar = (props) => {
             })
         }
         else if(Math.abs(actualDuration - stallDuration) < 5  &&
-        ((!currentRoom) || (currentRoom && currentRoom.master.toString() == user._id.toString()))){
+        (!currentRoom || (currentRoom && currentRoom.master.toString() == user._id.toString()))){
             document.getElementById('song').src = '';
             document.getElementById('song').src = `${process.env.REACT_APP_SERVER}/api/song/${currentMusic?.song}`;
             if(currentQueue){
@@ -67,7 +102,7 @@ const PlayBar = (props) => {
     },[currentMusic])
 
     useEffect(async ()=>{
-        if(currentQueue && currentQueue.nowPlaying && ((!currentRoom) || (currentRoom && currentQueue.setter!=false))){
+        if(currentQueue && currentQueue.nowPlaying){
             setCurrentMusic({...currentQueue.nowPlaying,room:true,_id:(currentQueue.nowPlaying._id.substring(0,24))})
         }
     },[currentQueue])

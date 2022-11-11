@@ -21,7 +21,7 @@ const RoomCard = (props)=> {
               </div>
             </div>  
             <div className="roomcard-bottom">
-              {(props.status=='Online') && <div style={{width:"100%",overflow:"hidden", textOverflow:"ellipsis",whiteSpace: "nowrap"}}><BsMusicNote/>{props.music.title} by {props.music.artists}</div>}
+              {(props.music!='') && <div style={{width:"100%",overflow:"hidden", textOverflow:"ellipsis",whiteSpace: "nowrap"}}><BsMusicNote/>{props.music.title} by {props.music.artists}</div>}
               {/* {props.time} */}
             </div>
           </div>
