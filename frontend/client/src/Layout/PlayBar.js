@@ -42,7 +42,7 @@ const PlayBar = (props) => {
                 }
             });
         }
-    },[socket])
+    },[currentRoom])
 
     useEffect(()=>{
         clearInterval(interval);
@@ -54,7 +54,7 @@ const PlayBar = (props) => {
                     room:currentRoom._id,
                     music:{...currentMusic,
                     paused: document.getElementById('song').paused,
-                    currentTime: (document.getElementById('song').currentTime),}
+                    currentTime: (document.getElementById('song').currentTime+0.5),}
                 })
 
             },2000);
