@@ -9,6 +9,7 @@ const roomSchema = new Schema({
     queue: {type:Object, default:null},
     status: {type:String, enum: ['Online','Offline'], default: 'Online'},
     members: {type:Number},
+    thumbnail: {type: Schema.Types.ObjectId,ref: 'images.files',}
 },{
     timestamps: true,
 })

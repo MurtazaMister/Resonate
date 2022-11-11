@@ -26,6 +26,7 @@ router.get('/', auth, async (req,res)=>{
 router.post('/create', auth, async (req,res)=>{
     let roomObj = {
         roomname: req.body.roomname,
+        thumbnail: req.body.thumbnail,
         master: mongoose.Types.ObjectId(req.user),
         slaves: [],
         music: {},

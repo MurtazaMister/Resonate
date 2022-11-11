@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const musicSchema = new Schema({
     thumbnail: {
         type: Schema.Types.ObjectId,
-        ref: 'songs.files',
+        ref: 'images.files',
     },
     title: {
         type: String,
@@ -28,7 +28,7 @@ const musicSchema = new Schema({
     },
     song: {
         type: Schema.Types.ObjectId,
-        ref: 'images.files'
+        ref: 'songs.files'
     },
     duration: {
         type: String,
