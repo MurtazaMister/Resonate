@@ -50,7 +50,7 @@ const NavBar = () => {
           'Authorization': `Bearer ${user.token}`
         }
       });
-      socket.emit('leave_room', currentRoom._id);
+      if(currentRoom) {socket.emit('leave_room', currentRoom._id);}
       await setCurrentRoom();
       localStorage.removeItem('user');
       dispatch({type: 'LOGOUT'})
