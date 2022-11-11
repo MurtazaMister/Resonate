@@ -10,7 +10,7 @@ import { useContext } from 'react';
 import { AiFillCrown } from 'react-icons/ai';
 import {GoPrimitiveDot} from 'react-icons/go';
 import { useEffect } from 'react';
-import { CurrentQueue } from '../App';
+import { CurrentQueue, Socket } from '../App';
 
 const NavBar = () => {
   const {currentRoom, setCurrentRoom} = useContext(CurrentRoom);
@@ -18,18 +18,20 @@ const NavBar = () => {
   let location = useLocation();
   const {dispatch, user} = useAuthContext();
   const {currentQueue, setCurrentQueue} = useContext(CurrentQueue);
+  const socket = useContext(Socket);
 
   async function leaveRoom(){
     let res = await axios.patch(`${process.env.REACT_APP_SERVER}/api/room/leave`,{},{
       headers:{
           'Authorization': `Bearer ${user.token}`,
       },
-      });
-      if(res.data.status=='success'){
-          setCurrentRoom();
-          setCurrentQueue();
-          history.replace('/')
-      }
+    });
+    if(res.data.status=='success'){
+        socket.emit('leave_room', currentRoom._id);
+        setCurrentRoom();
+        setCurrentQueue();
+        history.replace('/')
+    }
   }
 
   useEffect(async ()=>{
@@ -43,12 +45,13 @@ const NavBar = () => {
 
   async function handleLogout(){
     try {
-      setCurrentRoom();
       let res = await axios.patch(`${process.env.REACT_APP_SERVER}/api/room/leave`,{},{
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
       });
+      socket.emit('leave_room', currentRoom._id);
+      await setCurrentRoom();
       localStorage.removeItem('user');
       dispatch({type: 'LOGOUT'})
     } catch (err) {

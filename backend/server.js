@@ -1,10 +1,55 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const http = require('http');
+const { Server } = require('socket.io');
 const connectDB = require("./db/connect");
-
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+
+require("dotenv").config();
+
+app.use(cors());
+app.use(bodyParser.json());
+
+// Setting up the socket server
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: process.env.frontend,
+        methods: ["GET", "POST"]
+    }
+});
+
+io.on("connection",(socket)=>{
+    socket.on('join_room', (data)=>{
+        console.log('someone joined room');
+        socket.join(data);
+    });
+    
+    socket.on('leave_room', (data)=>{
+        console.log('someone left room');
+        socket.leave(data);
+    });
+
+    socket.on("set_queue", (data)=>{
+        socket.broadcast.to(data.room).emit('get_queue', data.queue);
+    });
+
+    socket.on("set_current_music", (data)=>{
+        socket.broadcast.to(data.room).emit('get_current_music', data.music);
+    });
+})
+
+const socketPort = process.env.socketPort || 7000;
+
+server.listen(socketPort, ()=>{
+    console.log(`Socket server up and running on port ${socketPort}`);
+})
+
+// Setting up the node server
 
 const {init_songs, song_router} = require('./uploads/songs');
 const {init_images, image_router} = require('./uploads/images');
@@ -15,13 +60,8 @@ const api_song_router = require('./api/song.api');
 const api_user_router = require('./api/user.api');
 const api_room_router = require('./api/room.api');
 
-require("dotenv").config();
-
 let gfs_images,gridfsBucket_images;
 let gfs_songs,gridfsBucket_songs;
-
-app.use(cors());
-app.use(bodyParser.json());
 
 // Routers
 app.use('/songs',song_router);

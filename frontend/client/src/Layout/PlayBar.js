@@ -16,29 +16,47 @@ import ReactDOM from "react-dom";
 
 import { CurrentMusic } from '../App';
 import { useContext } from 'react';
-import { CurrentQueue } from '../App';
+import { CurrentQueue, CurrentRoom, Socket } from '../App';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const PlayBar = (props) => {
 
     const {currentMusic, setCurrentMusic} = useContext(CurrentMusic);
     const {currentQueue, setCurrentQueue} = useContext(CurrentQueue);
+    const {currentRoom} = useContext(CurrentRoom);
+    const {user} = useAuthContext();
+    const socket = useContext(Socket);
 
     async function endHandler(){
         let actualDuration = Number(currentMusic.duration.split(':')[0])*60 + Number(currentMusic.duration.split(':')[1]);
         let stallDuration = document.getElementById('song').currentTime;
-        if(currentQueue && currentQueue.comingUpNext.length && Math.abs(actualDuration - stallDuration) < 5){
+        if(currentQueue && currentQueue.comingUpNext.length && Math.abs(actualDuration - stallDuration) < 5 &&
+        ((!currentRoom) || (currentRoom && currentRoom.master.toString() == user._id.toString()))){
+            socket.emit('set_queue', {
+                queue:{nowPlaying:(currentQueue.comingUpNext.length)?currentQueue.comingUpNext[0]:null,
+                comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.slice(1):[],
+                setter: false,},
+                room: currentRoom._id,
+            })
             await setCurrentQueue({
                 nowPlaying:(currentQueue.comingUpNext.length)?currentQueue.comingUpNext[0]:null,
-                comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.splice(1):[],
+                comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.slice(1):[],
             })
         }
-        else if(Math.abs(actualDuration - stallDuration) < 5){
+        else if(Math.abs(actualDuration - stallDuration) < 5  &&
+        ((!currentRoom) || (currentRoom && currentRoom.master.toString() == user._id.toString()))){
             document.getElementById('song').src = '';
             document.getElementById('song').src = `${process.env.REACT_APP_SERVER}/api/song/${currentMusic?.song}`;
             if(currentQueue){
-                setCurrentQueue({
+                socket.emit('set_queue', {
+                    queue:{nowPlaying:(currentQueue.comingUpNext.length)?currentQueue.comingUpNext[0]:null,
+                    comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.slice(1):[],
+                    setter: false,},
+                    room: currentRoom._id,
+                })
+                await setCurrentQueue({
                     nowPlaying:(currentQueue.comingUpNext.length)?currentQueue.comingUpNext[0]:null,
-                    comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.splice(1):[],
+                    comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.slice(1):[],
                 })
             }
         }
@@ -49,7 +67,7 @@ const PlayBar = (props) => {
     },[currentMusic])
 
     useEffect(async ()=>{
-        if(currentQueue && currentQueue.nowPlaying){
+        if(currentQueue && currentQueue.nowPlaying && ((!currentRoom) || (currentRoom && currentQueue.setter!=false))){
             setCurrentMusic({...currentQueue.nowPlaying,room:true,_id:(currentQueue.nowPlaying._id.substring(0,24))})
         }
     },[currentQueue])

@@ -17,10 +17,14 @@ import {Register} from './Page/Register';
 import React, { createContext, useState } from 'react';
 import {useAuthContext} from './hooks/useAuthContext';
 import DisplayRoom from './Page/DisplayRoom';
+import io from 'socket.io-client';
+
+const socket = io.connect(process.env.REACT_APP_SOCKET_SERVER);
 
 const CurrentMusic = createContext();
 const CurrentRoom = createContext();
 const CurrentQueue = createContext();
+const Socket = createContext();
 
 function App() {
 
@@ -32,7 +36,8 @@ function App() {
     return ( 
         <Router >
         <ScrollToTop />
-            <div className = "App" >            
+            <div className = "App" >
+                <Socket.Provider value={socket}>
                 <CurrentRoom.Provider value={{currentRoom, setCurrentRoom}}>
                     <CurrentQueue.Provider value={{currentQueue, setCurrentQueue}}>
                     <NavBar />
@@ -58,10 +63,11 @@ function App() {
                     </CurrentMusic.Provider>
                     </CurrentQueue.Provider>
                 </CurrentRoom.Provider>
+                </Socket.Provider>
             </div>
         </Router>
     );
 }
 
 export default App;
-export {CurrentMusic, CurrentRoom, CurrentQueue};
+export {CurrentMusic, CurrentRoom, CurrentQueue, Socket};

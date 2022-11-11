@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import SongListing from '../Layout/SongListing';
 import { BiSearchAlt } from 'react-icons/bi';
 import { CurrentQueue } from '../App';
+import { Socket } from '../App';
 
 const DisplayRoom = (props) => {
 
@@ -17,16 +18,25 @@ const DisplayRoom = (props) => {
     const {currentRoom, setCurrentRoom} = useContext(CurrentRoom);
     const {currentQueue, setCurrentQueue} = useContext(CurrentQueue);
     const [songs, setSongs] = useState([]);
+    const socket = useContext(Socket);
 
     useEffect(async ()=>{
-        let res = await axios.post(`${process.env.REACT_APP_SERVER}/api/room/queue`,{
-            queue: currentQueue,
-            roomId: currentRoom._id,
-        },{
-            headers: {
-              'Authorization': `Bearer ${user.token}`
-            }
-        });
+        socket.on('get_queue',(queue)=>{
+            setCurrentQueue(queue);
+        })
+    }, [socket])
+
+    useEffect(async ()=>{
+        if(currentQueue.setter!=false){
+            let res = await axios.post(`${process.env.REACT_APP_SERVER}/api/room/queue`,{
+                queue: currentQueue,
+                roomId: currentRoom._id,
+            },{
+                headers: {
+                  'Authorization': `Bearer ${user.token}`
+                }
+            });
+        }
     },[currentQueue])
 
     useEffect(async ()=>{
@@ -47,6 +57,7 @@ const DisplayRoom = (props) => {
         });
         if(res.data.status=='success'){
             setCurrentRoom(res.data.room);
+            socket.emit('join_room',room_id);
         }
         else{
             history.replace('/rooms')
