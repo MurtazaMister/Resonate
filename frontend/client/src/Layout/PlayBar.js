@@ -23,6 +23,27 @@ const PlayBar = (props) => {
     const {currentMusic, setCurrentMusic} = useContext(CurrentMusic);
     const {currentQueue, setCurrentQueue} = useContext(CurrentQueue);
 
+    async function endHandler(){
+        let actualDuration = Number(currentMusic.duration.split(':')[0])*60 + Number(currentMusic.duration.split(':')[1]);
+        let stallDuration = document.getElementById('song').currentTime;
+        if(currentQueue && currentQueue.comingUpNext.length && Math.abs(actualDuration - stallDuration) < 5){
+            await setCurrentQueue({
+                nowPlaying:(currentQueue.comingUpNext.length)?currentQueue.comingUpNext[0]:null,
+                comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.splice(1):[],
+            })
+        }
+        else if(Math.abs(actualDuration - stallDuration) < 5){
+            document.getElementById('song').src = '';
+            document.getElementById('song').src = `${process.env.REACT_APP_SERVER}/api/song/${currentMusic?.song}`;
+            if(currentQueue){
+                setCurrentQueue({
+                    nowPlaying:(currentQueue.comingUpNext.length)?currentQueue.comingUpNext[0]:null,
+                    comingUpNext:(currentQueue.comingUpNext.length-1>0)?currentQueue.comingUpNext.splice(1):[],
+                })
+            }
+        }
+    }
+
     useEffect(async ()=>{
         await document.getElementById('song').play();
     },[currentMusic])
@@ -42,7 +63,7 @@ const PlayBar = (props) => {
                 <span className="song-artists">{currentMusic.artists}</span>
             </div>
         </div>}
-            <audio style={{outline:"none"}} controls src={(currentMusic?.song)?`${process.env.REACT_APP_SERVER}/api/song/${currentMusic?.song}`:""} id="song" />
+            <audio onStalled={endHandler} style={{outline:"none"}} controls src={(currentMusic?.song)?`${process.env.REACT_APP_SERVER}/api/song/${currentMusic?.song}`:""} id="song" />
             
 
             {/* <SongDetails />
