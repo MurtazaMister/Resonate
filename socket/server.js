@@ -45,6 +45,10 @@ io.on("connection",(socket)=>{
 
 const socketPort = process.env.PORT || 7000;
 
+app.get("/", (req,res)=>{
+    res.send("Socket up and running");
+})
+
 connectDB(process.env.mongoURI).then(()=>{
     console.log("Connected to database");
     server.listen(socketPort, ()=>{
