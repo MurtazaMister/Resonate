@@ -1,9 +1,7 @@
-import { Songs } from "../db/db";
 import MusicCard from "../component/MusicCard";
 import axios from 'axios';
 
 import React, { useRef } from 'react';
-import ReactDOM from "react-dom";
 import { useState, useEffect } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
 import {useDraggable} from 'react-use-draggable-scroll';

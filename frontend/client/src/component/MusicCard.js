@@ -1,5 +1,4 @@
 import { BsPlayFill  } from 'react-icons/bs'
-import {NavLink} from 'react-router-dom'
 import React, { useContext } from 'react';
 import { CurrentMusic } from '../App';
 import { CurrentQueue } from '../App';

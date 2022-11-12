@@ -3,12 +3,7 @@ import Home from "./Page/Home";
 import NavBar from "./Layout/NabBar";
 import PlayBar from "./Layout/PlayBar";
 import SideBar from "./Layout/SideBar";
-import SearchPg from './Page/searchpg';
 import ScrollToTop from './config/ScrollToTop';
-import Library from './Page/Library';
-import LikedSongs from './Page/Liked';
-import SongPage from './Page/SongPage';
-import CreatePlaylist from './Page/CreatePlaylist';
 import UploadSong from './Page/UploadSong';
 import ErrorPage from './Page/ErrorPage';
 import ComingSoon from './Page/ComingSoon';
@@ -47,7 +42,8 @@ function App() {
                     <CurrentMusic.Provider value={{currentMusic,setCurrentMusic}}>
                         <Switch>
                             <Route exact path='/' component={Home}/>
-                            <Route path='/search' component={SearchPg} /> 
+                            {/* SearchPg */}
+                            <Route path='/search' component={ComingSoon} /> 
 
                             <Route exact path='/login' component={!user?Login:Home}/>
                             <Route exact path='/register' component={!user?Register:Home}/>
