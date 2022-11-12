@@ -36,8 +36,10 @@ app.use('/api/thumbnail',function(req,res,next){
     next();
 },api_thumbnail_router);
 app.use('/api/song',function(req,res,next){
+    console.log('funtion in middle')
     req.gridfsBucket_songs = gridfsBucket_songs;
     req.gfs_songs = gfs_songs;
+    console.log('set some params, sending to next')
     next();
 },api_song_router);
 app.use('/api/user',api_user_router);
