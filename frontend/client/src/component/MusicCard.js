@@ -20,10 +20,10 @@ const MusicCard = ({parser,styleCheck}) => {
             state:{check: parser}
         }}
         > */}
-        <div style={{display:"block",width:"fit-content"}} className={styleCheck?"music-card neumorphisim-musiccard":"music-card library-card"} >
+        <div style={{width:"fit-content"}} className={styleCheck?"music-card neumorphisim-musiccard":"music-card library-card"} >
         <img loading="lazy" src={`${process.env.REACT_APP_SERVER}/api/thumbnail/${parser.thumbnail}`} alt="s"  />
         
-        <BsPlayFill onClick={playSong} viewBox='-0.5 0 16 16' className="hover-playbtn">
+        <BsPlayFill style={{display:"block"}} onClick={playSong} viewBox='-0.5 0 16 16' className="hover-playbtn">
         </BsPlayFill>
 
         <div>

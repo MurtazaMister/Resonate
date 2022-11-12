@@ -27,6 +27,7 @@ router.get('/:id', (req,res)=>{
     
             const contentLength = end - start + 1;
             const headers = {
+                'Content-Disposition': `attachment; filename=${file.filename}`,
                 "Content-Range": `bytes ${start}-${end}/${songSize}`,
                 "Accept-Ranges": "bytes",
                 "Content-Length": contentLength,
