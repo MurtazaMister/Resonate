@@ -43,7 +43,7 @@ io.on("connection",(socket)=>{
     });
 })
 
-const socketPort = process.env.socketPort || 7000;
+const socketPort = process.env.PORT || 7000;
 
 connectDB(process.env.mongoURI).then(()=>{
     console.log("Connected to database");
