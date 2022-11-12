@@ -33,6 +33,7 @@ router.get('/:id', (req,res)=>{
                 "Content-Length": contentLength,
                 "Content-Type": "audio/mpeg",
                 "Access-Control-Allow-Origin": '*',
+                'Access-Control-Expose-Headers': "Content-Disposition",
             }
             
             console.log("Stage 3");
