@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const http = require('http');
-const { Server } = require('socket.io');
 const connectDB = require("./db/connect");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -12,43 +10,6 @@ require("dotenv").config();
 
 app.use(cors());
 app.use(bodyParser.json());
-
-// Setting up the socket server
-
-const server = http.createServer(app);
-
-const io = new Server(server, {
-    cors: {
-        origin: process.env.frontend,
-        methods: ["GET", "POST"]
-    }
-});
-
-io.on("connection",(socket)=>{
-    socket.on('join_room', (data)=>{
-        socket.join(data);
-    });
-    
-    socket.on('leave_room', async (data)=>{
-        socket.leave(data);
-        let room = await Room.findById(data);
-        socket.broadcast.to(data).emit('updated_room', room);
-    });
-
-    socket.on("set_queue", (data)=>{
-        socket.broadcast.to(data.room).emit('get_queue', data.queue);
-    });
-
-    socket.on("set_music", (data)=>{
-        socket.broadcast.to(data.room).emit('get_music', data.music);
-    });
-})
-
-const socketPort = process.env.socketPort || 7000;
-
-server.listen(socketPort, ()=>{
-    console.log(`Socket server up and running on port ${socketPort}`);
-})
 
 // Setting up the node server
 
@@ -82,7 +43,7 @@ app.use('/api/song',function(req,res,next){
 app.use('/api/user',api_user_router);
 app.use('/api/room',api_room_router);
 
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
 app.get("/", (req,res)=>{
     res.send("Server up and running");
@@ -95,7 +56,7 @@ connectDB(process.env.mongoURI).then(()=>{
     [gridfsBucket_images,gfs_images] = init_images(conn);
     
     app.listen(port, ()=>{
-        console.log(`Server is up and running on http://localhost:${port}/`);
+        console.log(`Server is up and running`);
     })
 }).catch((err)=>{
     console.log(err);

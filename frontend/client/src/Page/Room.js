@@ -23,7 +23,6 @@ const Room = () => {
     <div className="content" style={{display:"block"}}>
       <h1>Your Parties</h1><br/>
       {/* <Link className="link-reset" to="/displayroom"><RoomCard people="20" song_name="song name" artist="artist name" time="2hrs"/></Link><br/> */}
-      {console.log(rooms)}
       {
         rooms.map((room)=>{
           return <Link className="link-reset" to={`/room/${room._id}`}><RoomCard key={room._id} name={room.roomname} people={room.members} thumbnail={room.thumbnail} status={room.status} music={(room?.queue?.nowPlaying)?room?.queue?.nowPlaying:''} time={room.createdAt} /></Link>

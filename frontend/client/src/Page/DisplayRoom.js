@@ -37,7 +37,6 @@ const DisplayRoom = (props) => {
         })
 
         socket.on('updated_room',(room)=>{
-            console.log(room);
             setCurrentRoom(room);
         })
     }, [socket])
