@@ -44,9 +44,12 @@ app.use('/api/user',api_user_router);
 app.use('/api/room',api_room_router);
 
 app.use((req, res, next) => {
+    console.log("Appending headers");
     res.append('Access-Control-Allow-Origin', ['*']);
     res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.append('Access-Control-Allow-Headers', 'Content-Type');
+    console.log(res.getHeaders()['Access-Control-Allow-Origin']);
+    console.log(res.getHeaders());
     next();
 });
 
