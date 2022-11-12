@@ -42,6 +42,7 @@ router.get('/:id', (req,res)=>{
             console.log("Stage 4");
             const downloadStream = req.gridfsBucket_songs.openDownloadStreamByName(file.filename,{start,end});
             downloadStream.pipe(res);
+            console.log("Stage 5");
             return;
         })
     } catch (err) {
