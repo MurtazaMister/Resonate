@@ -2,6 +2,10 @@
     margin: 0px;
 }
 
+.container-cards{
+    margin: 10px 0px;
+}
+
 .cards {
     border-radius: 10px;
     height: 200px;

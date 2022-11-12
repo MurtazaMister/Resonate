@@ -31,7 +31,7 @@ function init_images(conn){
 
 const upload = multer({storage:storage_images, fileFilter:function(req,file,callback){
     let ext = path.extname(file.originalname);
-    if(ext!='.png' && ext!='.jpg' && ext!='.jpeg' && ext!='.gif'){
+    if(ext.toLowerCase()!='.png' && ext.toLowerCase()!='.jpg' && ext.toLowerCase()!='.jpeg' && ext.toLowerCase()!='.gif'){
         return callback(new Error('Only images are allowed'));
     }
     callback(null, true);

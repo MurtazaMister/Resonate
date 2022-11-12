@@ -31,7 +31,7 @@ function init_songs(conn){
 
 const upload = multer({storage:storage_songs, fileFilter:function(req,file,callback){
     let ext = path.extname(file.originalname);
-    if(ext!='.mp3' && ext!='.ogg' && ext!='.wav'){
+    if(ext.toLowerCase()!='.mp3' && ext.toLowerCase()!='.ogg' && ext.toLowerCase()!='.wav'){
         return callback(new Error('Only songs are allowed'));
     }
     callback(null, true);
