@@ -252,6 +252,7 @@ const UploadSong = () => {
         <div className="rectangle">
         <AiFillPlusCircle className='icon'/>
         <input type="file" name="thumbnail" id="thumbnail" onChange={onFileChange} />
+        <br/>
         <span id="imageIndicator" style={{color:"white"}}></span>
         {error_image && <span style={{color:"red"}}>Error: Invalid file or filesize &#40;&lt;=2MB, reupload file&#41;</span>}
         </div>

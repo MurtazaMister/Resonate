@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Register.css";
-import { NavLink as Link, Redirect, useHistory } from 'react-router-dom';
+import { NavLink as Link, Redirect } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
 

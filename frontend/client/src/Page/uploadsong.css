@@ -6,6 +6,10 @@ h2 {
     color: white;
 }
 
+#thumbnail {
+    margin-top: 120px;
+}
+
 .rectangle {
     display: block;
     width: 300px;
