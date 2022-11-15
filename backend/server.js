@@ -2,9 +2,16 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const connectDB = require("./db/connect");
-
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const Room = require("./models/room.model");
+
+require("dotenv").config();
+
+app.use(cors());
+app.use(bodyParser.json());
+
+// Setting up the node server
 
 const {init_songs, song_router} = require('./uploads/songs');
 const {init_images, image_router} = require('./uploads/images');
@@ -15,13 +22,8 @@ const api_song_router = require('./api/song.api');
 const api_user_router = require('./api/user.api');
 const api_room_router = require('./api/room.api');
 
-require("dotenv").config();
-
 let gfs_images,gridfsBucket_images;
 let gfs_songs,gridfsBucket_songs;
-
-app.use(cors());
-app.use(bodyParser.json());
 
 // Routers
 app.use('/songs',song_router);
@@ -41,7 +43,14 @@ app.use('/api/song',function(req,res,next){
 app.use('/api/user',api_user_router);
 app.use('/api/room',api_room_router);
 
-const port = process.env.port || 5000;
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.append('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
+const port = process.env.PORT || 5000;
 
 app.get("/", (req,res)=>{
     res.send("Server up and running");
@@ -54,7 +63,7 @@ connectDB(process.env.mongoURI).then(()=>{
     [gridfsBucket_images,gfs_images] = init_images(conn);
     
     app.listen(port, ()=>{
-        console.log(`Server is up and running on http://localhost:${port}/`);
+        console.log(`Server is up and running`);
     })
 }).catch((err)=>{
     console.log(err);

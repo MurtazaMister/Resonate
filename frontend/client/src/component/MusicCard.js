@@ -1,5 +1,4 @@
 import { BsPlayFill  } from 'react-icons/bs'
-import {NavLink} from 'react-router-dom'
 import React, { useContext } from 'react';
 import { CurrentMusic } from '../App';
 import { CurrentQueue } from '../App';
@@ -24,7 +23,7 @@ const MusicCard = ({parser,styleCheck}) => {
         <div style={{width:"fit-content"}} className={styleCheck?"music-card neumorphisim-musiccard":"music-card library-card"} >
         <img loading="lazy" src={`${process.env.REACT_APP_SERVER}/api/thumbnail/${parser.thumbnail}`} alt="s"  />
         
-        <BsPlayFill onClick={playSong} viewBox='-0.5 0 16 16' className="hover-playbtn">
+        <BsPlayFill style={{display:"block"}} onClick={playSong} viewBox='-0.5 0 16 16' className="hover-playbtn">
         </BsPlayFill>
 
         <div>

@@ -270,7 +270,10 @@ const UploadSong = () => {
       <div className="bottom">
         <Toggle isPublic={isPublic} isAnonymous={isAnonymous} setPublic={setPublic} setAnonymous={setAnonymous} />
         {/* <Toggle/> */}
-        <h3 className='bottom_2'>Attach music file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BiMessageSquareAdd className='add'/></h3>
+        <h3 className='bottom_2'>Attach music file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label htmlFor="song">
+          <BiMessageSquareAdd className='add'/>
+        </label></h3>
         <input type="file" name="song" id="song" onChange={onFileChange} />
         <span id="songIndicator" style={{color:"white"}}></span>
         {error_song && <span style={{color:"red"}}>Error: Invalid file or filesize &#40;&lt;=10MB, reupload file&#41;</span>}

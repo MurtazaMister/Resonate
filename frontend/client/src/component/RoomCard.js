@@ -7,7 +7,7 @@ const RoomCard = (props)=> {
     <div className='container-cards'>
         <div className="cards">
           <div className="rectangle_2">
-            <img src="http://localhost:5000/api/thumbnail/63695991844705c3403b817b" alt="" />
+          <img loading="lazy" src={`${process.env.REACT_APP_SERVER}/api/thumbnail/${props.thumbnail}`} alt=""  />
           </div>
           <div className='card-data'>
             <div className="roomcard-top">
@@ -21,7 +21,7 @@ const RoomCard = (props)=> {
               </div>
             </div>  
             <div className="roomcard-bottom">
-              {(props.status=='Online') && <div style={{width:"100%",overflow:"hidden", textOverflow:"ellipsis",whiteSpace: "nowrap"}}><BsMusicNote/>{props.music.title} by {props.music.artists}</div>}
+              {(props.music!='') && <div style={{width:"100%",overflow:"hidden", textOverflow:"ellipsis",whiteSpace: "nowrap"}}><BsMusicNote/>{props.music.title} by {props.music.artists}</div>}
               {/* {props.time} */}
             </div>
           </div>
