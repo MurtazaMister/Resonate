@@ -52,7 +52,7 @@ io.on("connection",(socket)=>{
 const socketPort = process.env.PORT || 7000;
 
 app.get("/", (req,res)=>{
-    res.send("Socket up and running");
+    res.status(200).send("Socket up and running");
 })
 
 connectDB(process.env.mongoURI).then(()=>{
