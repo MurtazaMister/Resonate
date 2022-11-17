@@ -5,9 +5,12 @@ import React, { useRef } from 'react';
 import { useState, useEffect } from "react";
 import { useAuthContext } from '../hooks/useAuthContext';
 import {useDraggable} from 'react-use-draggable-scroll';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const PlayListTile = () => {
     
+    const [load, setLoad] = useState(false);
     const {user} = useAuthContext();
     const [songs, setSongs] = useState([]);
 
@@ -15,6 +18,7 @@ const PlayListTile = () => {
     const [{events},{events:events2},{events:events3}] = [useDraggable(ref, {applyRubberBandEffect:true}),useDraggable(ref2, {applyRubberBandEffect:true}),useDraggable(ref3, {applyRubberBandEffect:true})]
     
     useEffect(async ()=>{
+        setLoad(true);
         await setSongs([]);
         
         // Recently Added - public - /public
@@ -27,6 +31,8 @@ const PlayListTile = () => {
                 events: events,
             }]
         });
+        
+        setLoad(false);
 
         // Your uploads - self uploaded songs - /self
         let music_self = await axios.get(`${process.env.REACT_APP_SERVER}/api/music/self?limit=20`,{
@@ -77,10 +83,19 @@ const PlayListTile = () => {
         // Top playlists - public - /playlists/public
         // Your playlists - /playlists/self
         // Your private jukebox - /playlists/private
+        
     },[user]);
 
     return (
         <>
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={load}
+        // onClick={handleClose}
+        >
+        <CircularProgress style={{position:"absolute"}} color="inherit" />
+        </Backdrop>
+
         <div {...events} ref={ref} style={{display:"flex",flexDirection:"row", overflowX:"scroll",display:"none"}} />
         <div {...events2} ref={ref2} style={{display:"flex",flexDirection:"row", overflowX:"scroll",display:"none"}} />
         <div {...events3} ref={ref3} style={{display:"flex",flexDirection:"row", overflowX:"scroll",display:"none"}} />

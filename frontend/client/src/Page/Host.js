@@ -78,7 +78,7 @@ const Host = () => {
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
       open={load}
       // onClick={handleClose}
-    >
+      >
     <CircularProgress style={{position:"absolute"}} color="inherit" />
     </Backdrop>
       <form className='create_room' onSubmit={handleSubmit}>
