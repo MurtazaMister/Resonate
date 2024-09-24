@@ -4,4 +4,4 @@
  Resonate is a software project supporting all known audio media formats and has the ability to play them with ease.
  Users can create a room and send link to their friends and family so that everyone present in the room can listen songs together.
 
-Developed by - Murtaza Mister, Manushi Patel
+Developed by - [Murtaza Mister](https://github.com/MurtazaMister), [Manushi Patel](https://github.com/manupatel20)
